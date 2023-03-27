@@ -23,9 +23,12 @@ use sovereign_sdk::{
 use sovereign_sdk::{da::DaLayerTrait, stf::StateTransitionFunction};
 use sovereign_sdk::{db::SlotStore, serial::Decode};
 use stf::Demo;
+use tracing::Level;
 use tx_verifier::DemoAppTxVerifier;
 
-use crate::{data_generation::QueryGenerator, helpers::run_query};
+use crate::{
+    data_generation::QueryGenerator, helpers::run_query, runtime::Runtime, tx_hooks::DemoAppTxHooks,
+};
 mod batch;
 mod helpers;
 mod runtime;
@@ -33,6 +36,8 @@ mod stf;
 mod tx_hooks;
 mod tx_verifier;
 
+type C = MockContext;
+type DemoApp = Demo<C, DemoAppTxVerifier<C>, Runtime<C>, DemoAppTxHooks<C>>;
 const CELESTIA_NODE_AUTH_TOKEN: &'static str = "";
 
 const START_HEIGHT: u64 = HEIGHT_OF_FIRST_TXS - 5;
@@ -48,6 +53,7 @@ pub fn default_celestia_service() -> CelestiaService {
     );
     let client = jsonrpsee::http_client::HttpClientBuilder::default()
         .set_headers(headers)
+        .max_request_body_size(1024 * 1024 * 100) // 100 MB
         .build("http://localhost:11111/")
         .unwrap();
     CelestiaService::with_client(client)
@@ -63,10 +69,21 @@ const DATA_DIR_LOCATION: &'static str = "demo_data";
 
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
+    let subscriber = tracing_subscriber::fmt()
+        .with_max_level(Level::WARN)
+        .finish();
+    tracing::subscriber::set_global_default(subscriber)
+        .map_err(|_err| eprintln!("Unable to set global default subscriber"))
+        .expect("Cannot fail to set subscriber");
     let cel_service = default_celestia_service();
     let ledger_db = LedgerDB::<FilteredCelestiaBlock>::with_path(DATA_DIR_LOCATION).unwrap();
     let storage = ProverStorage::with_path(DATA_DIR_LOCATION).unwrap();
-    let mut demo = Demo::<MockContext, DemoAppTxVerifier<MockContext>>::new(storage.clone());
+    let mut demo = DemoApp::new(
+        storage.clone(),
+        Runtime::new(),
+        DemoAppTxVerifier::new(),
+        DemoAppTxHooks::new(),
+    );
     let da_app = CelestiaApp {
         db: ledger_db.clone(),
     };
@@ -163,6 +180,7 @@ async fn main() -> Result<(), anyhow::Error> {
         println!(
             "Current state: {}",
             run_query(
+                &mut demo.runtime,
                 QueryGenerator::generate_query_election_message(),
                 storage.clone(),
             )

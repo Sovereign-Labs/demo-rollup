@@ -5,7 +5,7 @@ version = 3
 [[package]]
 name = "accounts"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/sovereign.git#bd5baf871dac30c5503c5716365f9b01c73a4de5"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git#e075c2b890fda55c77d93e0184a6d69a3bdd914e"
 dependencies = [
  "anyhow",
  "borsh",
@@ -21,11 +21,11 @@ dependencies = [
 
 [[package]]
 name = "ahash"
-version = "0.7.6"
+version = "0.8.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fcb51a0695d8f838b1ee009b3fbf66bda078cd64590202a864a8f3e8c4315c47"
+checksum = "2c99f64d1e06488f620f932677e24bc6e2897582980441ae90a671415bd7ec2f"
 dependencies = [
- "getrandom",
+ "cfg-if",
  "once_cell",
  "version_check",
 ]
@@ -38,13 +38,13 @@ checksum = "7de8ce5e0f9f8d88245311066a578d72b7af3e7088f32783804676302df237e4"
 
 [[package]]
 name = "async-trait"
-version = "0.1.67"
+version = "0.1.68"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "86ea188f25f0255d8f92797797c97ebf5631fa88178beb1a46fdf5622c9a00e4"
+checksum = "b9ccdd8f2a161be9bd5c023df56f1b2a0bd1d83872ae53b71a84a12c9bf6e842"
 dependencies = [
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
- "syn 2.0.8",
+ "syn 2.0.10",
 ]
 
 [[package]]
@@ -96,7 +96,7 @@ dependencies = [
  "lazy_static",
  "lazycell",
  "peeking_take_while",
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
  "regex",
  "rustc-hash",
@@ -150,7 +150,7 @@ source = "git+https://github.com/preston-evans98/borsh-rs.git?branch=release-2#e
 dependencies = [
  "borsh-derive",
  "bytes",
- "hashbrown",
+ "hashbrown 0.13.2",
 ]
 
 [[package]]
@@ -161,7 +161,7 @@ dependencies = [
  "borsh-derive-internal",
  "borsh-schema-derive-internal",
  "proc-macro-crate",
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "syn 1.0.109",
 ]
 
@@ -170,7 +170,7 @@ name = "borsh-derive-internal"
 version = "0.0.0"
 source = "git+https://github.com/preston-evans98/borsh-rs.git?branch=release-2#e43db68c5feb8649826e8da89eb6a0a043704f4c"
 dependencies = [
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
  "syn 1.0.109",
 ]
@@ -180,7 +180,7 @@ name = "borsh-schema-derive-internal"
 version = "0.0.0"
 source = "git+https://github.com/preston-evans98/borsh-rs.git?branch=release-2#e43db68c5feb8649826e8da89eb6a0a043704f4c"
 dependencies = [
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
  "syn 1.0.109",
 ]
@@ -270,9 +270,9 @@ checksum = "5827cebf4670468b8772dd191856768aedcb1b0278a04f989f7766351917b9dc"
 
 [[package]]
 name = "cpufeatures"
-version = "0.2.5"
+version = "0.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "28d997bd5e24a5928dd43e46dc529867e207907fe0b239c3477d924f7f2ca320"
+checksum = "280a9f2d8b3a38871a3c8a46fb80db65e5e5ed97da80c4d08bf27fb63e35e181"
 dependencies = [
  "libc",
 ]
@@ -349,7 +349,7 @@ checksum = "7fcaabb2fef8c910e7f4c7ce9f67a1283a1715879a7c230ca9d6d1ae31f16d91"
 [[package]]
 name = "election"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/sovereign.git#bd5baf871dac30c5503c5716365f9b01c73a4de5"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git#e075c2b890fda55c77d93e0184a6d69a3bdd914e"
 dependencies = [
  "anyhow",
  "borsh",
@@ -415,14 +415,7 @@ dependencies = [
 [[package]]
 name = "first-read-last-write-cache"
 version = "0.1.0"
-dependencies = [
- "thiserror",
-]
-
-[[package]]
-name = "first-read-last-write-cache"
-version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/sovereign.git#bd5baf871dac30c5503c5716365f9b01c73a4de5"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git#e075c2b890fda55c77d93e0184a6d69a3bdd914e"
 dependencies = [
  "thiserror",
 ]
@@ -594,6 +587,12 @@ name = "hashbrown"
 version = "0.12.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8a9ee70c43aaf417c914396645a0fa852624801b24ebb7ae78fe8272889ac888"
+
+[[package]]
+name = "hashbrown"
+version = "0.13.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "43a3c133739dddd0d2990f9a4bdf8eb4b21ef50e4851ca85ab661199821d510e"
 dependencies = [
  "ahash",
 ]
@@ -753,12 +752,12 @@ checksum = "ce23b50ad8242c51a442f3ff322d56b02f08852c77e4c0b4d3fd684abc89c683"
 
 [[package]]
 name = "indexmap"
-version = "1.9.2"
+version = "1.9.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1885e79c1fc4b10f0e172c475f458b7f7b93061064d98c3293e98c5ba0c8b399"
+checksum = "bd070e393353796e801d209ad339e89596eb4c8d430d18ede6a1cced8fafbd99"
 dependencies = [
  "autocfg",
- "hashbrown",
+ "hashbrown 0.12.3",
 ]
 
 [[package]]
@@ -911,6 +910,7 @@ dependencies = [
 [[package]]
 name = "jupiter"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/Jupiter.git#1e94ef93c58ea43ecf4c36c88729170ec708a3cd"
 dependencies = [
  "anyhow",
  "base64 0.13.1",
@@ -1124,7 +1124,7 @@ version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "876a53fff98e03a936a674b29568b0e605f06b29372c2489ff4de23f1949743d"
 dependencies = [
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
  "syn 1.0.109",
 ]
@@ -1163,9 +1163,9 @@ checksum = "624a8340c38c1b80fd549087862da4ba43e08858af025b236e509b6649fc13d5"
 
 [[package]]
 name = "openssl"
-version = "0.10.47"
+version = "0.10.48"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d8b277f87dacc05a6b709965d1cbafac4649d6ce9f3ce9ceb88508b5666dfec9"
+checksum = "518915b97df115dd36109bfa429a48b8f737bd05508cf9588977b599648926d2"
 dependencies = [
  "bitflags",
  "cfg-if",
@@ -1182,7 +1182,7 @@ version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b501e44f11665960c7e7fcf062c7d96a14ade4aa98116c004b2e37b5be7d736c"
 dependencies = [
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
  "syn 1.0.109",
 ]
@@ -1195,9 +1195,9 @@ checksum = "ff011a302c396a5197692431fc1948019154afc178baf7d8e37367442a4601cf"
 
 [[package]]
 name = "openssl-sys"
-version = "0.9.82"
+version = "0.9.83"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a95792af3c4e0153c3914df2261bedd30a98476f94dc892b67dfe1d89d433a04"
+checksum = "666416d899cf077260dac8698d60a60b435a46d57e82acb1be3d0dad87284e5b"
 dependencies = [
  "autocfg",
  "cc",
@@ -1293,7 +1293,7 @@ version = "0.1.25"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6c8646e95016a7a6c4adea95bafa8a16baab64b583356217f2c85db4a39d9a86"
 dependencies = [
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "syn 1.0.109",
 ]
 
@@ -1312,14 +1312,14 @@ version = "0.4.30"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cf3d2011ab5c909338f7887f4fc896d35932e29146c12c8d01da6b22a80ba759"
 dependencies = [
- "unicode-xid 0.1.0",
+ "unicode-xid",
 ]
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.53"
+version = "1.0.54"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ba466839c78239c09faf015484e5cc04860f88242cff4d03eb038f04b4699b73"
+checksum = "e472a104799c74b514a57226160104aa483546de37e839ec50e3c2e41dd87534"
 dependencies = [
  "unicode-ident",
 ]
@@ -1411,7 +1411,7 @@ checksum = "4ea9b0f8cbe5e15a8a042d030bd96668db28ecb567ec37d691971ff5731d2b1b"
 dependencies = [
  "anyhow",
  "itertools",
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
  "syn 1.0.109",
 ]
@@ -1458,7 +1458,7 @@ version = "1.0.26"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4424af4bf778aae2051a77b60283332f386554255d722233d09fbfc7e30da2fc"
 dependencies = [
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
 ]
 
 [[package]]
@@ -1517,9 +1517,9 @@ dependencies = [
 
 [[package]]
 name = "regex"
-version = "1.7.2"
+version = "1.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cce168fea28d3e05f158bda4576cf0c844d5045bc2cc3620fa0292ed5bb5814c"
+checksum = "8b1f693b24f6ac912f4893ef08244d70b6067480d2f1a46e950c9691e6749d1d"
 dependencies = [
  "regex-syntax",
 ]
@@ -1532,9 +1532,9 @@ checksum = "f162c6dd7b008981e4d40210aca20b4bd0f9b60ca9271061b07f78537722f2e1"
 
 [[package]]
 name = "reqwest"
-version = "0.11.15"
+version = "0.11.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0ba30cc2c0cd02af1222ed216ba659cdb2f879dfe3181852fe7c50b1d0005949"
+checksum = "27b71749df584b7f4cac2c426c127a7c785a5106cc98f7a8feb044115f0fa254"
 dependencies = [
  "base64 0.21.0",
  "bytes",
@@ -1684,6 +1684,7 @@ dependencies = [
 [[package]]
 name = "schemadb"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git#e075c2b890fda55c77d93e0184a6d69a3bdd914e"
 dependencies = [
  "anyhow",
  "byteorder",
@@ -1769,9 +1770,9 @@ version = "1.0.158"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e801c1712f48475582b7696ac71e0ca34ebb30e09338425384269d9717c62cad"
 dependencies = [
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
- "syn 2.0.8",
+ "syn 2.0.10",
 ]
 
 [[package]]
@@ -1791,9 +1792,9 @@ version = "0.1.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bcec881020c684085e55a25f7fd888954d56609ef363479dc5a1305eb0d40cab"
 dependencies = [
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
- "syn 2.0.8",
+ "syn 2.0.10",
 ]
 
 [[package]]
@@ -1916,12 +1917,14 @@ dependencies = [
  "sovereign-db",
  "sovereign-sdk",
  "tokio",
+ "tracing",
+ "tracing-subscriber",
 ]
 
 [[package]]
 name = "sov-modules-api"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/sovereign.git#bd5baf871dac30c5503c5716365f9b01c73a4de5"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git#e075c2b890fda55c77d93e0184a6d69a3bdd914e"
 dependencies = [
  "anyhow",
  "borsh",
@@ -1935,11 +1938,11 @@ dependencies = [
 [[package]]
 name = "sov-modules-macros"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/sovereign.git#bd5baf871dac30c5503c5716365f9b01c73a4de5"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git#e075c2b890fda55c77d93e0184a6d69a3bdd914e"
 dependencies = [
  "anyhow",
  "borsh",
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
  "sov-modules-api",
  "sovereign-sdk",
@@ -1949,11 +1952,11 @@ dependencies = [
 [[package]]
 name = "sov-state"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/sovereign.git#bd5baf871dac30c5503c5716365f9b01c73a4de5"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git#e075c2b890fda55c77d93e0184a6d69a3bdd914e"
 dependencies = [
  "anyhow",
  "borsh",
- "first-read-last-write-cache 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git)",
+ "first-read-last-write-cache",
  "hex",
  "jmt",
  "sha2 0.10.6",
@@ -1965,6 +1968,7 @@ dependencies = [
 [[package]]
 name = "sovereign-db"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git#e075c2b890fda55c77d93e0184a6d69a3bdd914e"
 dependencies = [
  "anyhow",
  "borsh",
@@ -1978,11 +1982,12 @@ dependencies = [
 [[package]]
 name = "sovereign-sdk"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git#e075c2b890fda55c77d93e0184a6d69a3bdd914e"
 dependencies = [
  "anyhow",
  "borsh",
  "bytes",
- "first-read-last-write-cache 0.1.0",
+ "first-read-last-write-cache",
  "jmt",
  "sha2 0.10.6",
  "thiserror",
@@ -2017,7 +2022,7 @@ checksum = "9ca4b3b69a77cbe1ffc9e198781b7acb0c7365a883670e8f1c1bc66fba79a5c5"
 dependencies = [
  "proc-macro2 0.4.30",
  "quote 0.6.13",
- "unicode-xid 0.1.0",
+ "unicode-xid",
 ]
 
 [[package]]
@@ -2026,32 +2031,20 @@ version = "1.0.109"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "72b64191b275b66ffe2469e8af2c1cfe3bafa67b529ead792a6d0160888b4237"
 dependencies = [
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
  "unicode-ident",
 ]
 
 [[package]]
 name = "syn"
-version = "2.0.8"
+version = "2.0.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bcc02725fd69ab9f26eab07fad303e2497fad6fb9eba4f96c4d1687bdf704ad9"
+checksum = "5aad1363ed6d37b84299588d62d3a7d95b5a5c2d9aad5c85609fda12afaa1f40"
 dependencies = [
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
  "unicode-ident",
-]
-
-[[package]]
-name = "synstructure"
-version = "0.12.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f36bdaa60a83aca3921b5259d5400cbf5e90fc51931376a9bd4a0eb79aa7210f"
-dependencies = [
- "proc-macro2 1.0.53",
- "quote 1.0.26",
- "syn 1.0.109",
- "unicode-xid 0.2.4",
 ]
 
 [[package]]
@@ -2128,9 +2121,9 @@ version = "1.0.40"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f9456a42c5b0d803c8cd86e73dd7cc9edd429499f37a3550d286d5e86720569f"
 dependencies = [
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
- "syn 2.0.8",
+ "syn 2.0.10",
 ]
 
 [[package]]
@@ -2210,7 +2203,7 @@ version = "1.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d266c00fde287f55d3f1c3e96c500c362a2b8c695076ec180f27918820bc6df8"
 dependencies = [
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
  "syn 1.0.109",
 ]
@@ -2283,7 +2276,7 @@ version = "0.1.23"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4017f8f45139870ca7e672686113917c71c7a6e02d4924eda67186083c03081a"
 dependencies = [
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
  "syn 1.0.109",
 ]
@@ -2369,12 +2362,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fc72304796d0818e357ead4e000d19c9c174ab23dc11093ac919054d20a6a7fc"
 
 [[package]]
-name = "unicode-xid"
-version = "0.2.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f962df74c8c05a667b5ee8bcf162993134c104e96440b663c8daa176dc772d8c"
-
-[[package]]
 name = "untrusted"
 version = "0.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2453,7 +2440,7 @@ dependencies = [
  "bumpalo",
  "log",
  "once_cell",
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
  "syn 1.0.109",
  "wasm-bindgen-shared",
@@ -2487,7 +2474,7 @@ version = "0.2.84"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2aff81306fcac3c7515ad4e177f521b5c9a15f2b08f4e32d823066102f35a5f6"
 dependencies = [
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
  "syn 1.0.109",
  "wasm-bindgen-backend",
@@ -2663,14 +2650,13 @@ dependencies = [
 
 [[package]]
 name = "zeroize_derive"
-version = "1.3.3"
+version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "44bf07cb3e50ea2003396695d58bf46bc9887a1f362260446fad6bc4e79bd36c"
+checksum = "57090580b8b26d9fd2288c4ac982b3b3c6446cd8e91112bcf672d5ddb2f17441"
 dependencies = [
- "proc-macro2 1.0.53",
+ "proc-macro2 1.0.54",
  "quote 1.0.26",
- "syn 1.0.109",
- "synstructure",
+ "syn 2.0.10",
 ]
 
 [[package]]
