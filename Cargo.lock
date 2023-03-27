@@ -910,7 +910,7 @@ dependencies = [
 [[package]]
 name = "jupiter"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/Jupiter.git?branch=pfb_bug#edd386d33ae80b3f5380f1706cf4de28a0ba6fb4"
+source = "git+https://github.com/Sovereign-Labs/Jupiter.git#1e94ef93c58ea43ecf4c36c88729170ec708a3cd"
 dependencies = [
  "anyhow",
  "base64 0.13.1",
