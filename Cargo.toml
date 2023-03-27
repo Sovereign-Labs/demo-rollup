@@ -11,7 +11,7 @@ tokio = { version = "1", features = ["full"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 sha2 = "0.10.6"
-jupiter = { git = "https://github.com/Sovereign-Labs/Jupiter.git", branch = "upgrade" }
+jupiter = { git = "https://github.com/Sovereign-Labs/Jupiter.git", branch = "pfb_bug" }
 accounts = { git = "https://github.com/Sovereign-Labs/sovereign.git" }
 election = { git = "https://github.com/Sovereign-Labs/sovereign.git" }
 sovereign-sdk = { git = "https://github.com/Sovereign-Labs/sovereign.git" }
@@ -19,6 +19,8 @@ sov-state = { git = "https://github.com/Sovereign-Labs/sovereign.git", features 
 sov-modules-api = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["mocks"] }
 sov-modules-macros = { git = "https://github.com/Sovereign-Labs/sovereign.git" }
 sovereign-db = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"] }
+tracing = "0.1.37"
+tracing-subscriber = "0.3.16"
 
 anyhow = "1.0.62"
 jsonrpsee = { version = "0.16.2", features = ["http-client"] }
@@ -26,10 +28,3 @@ jsonrpsee = { version = "0.16.2", features = ["http-client"] }
 [patch.crates-io]
 # Patch borsh until "bytes" support is added
 borsh = { git = "https://github.com/preston-evans98/borsh-rs.git", branch = "release-2" }
-
-[patch.'https://github.com/Sovereign-Labs/sovereign.git']
-sovereign-sdk = { path = "../sovereign/sdk" }
-sovereign-db = { path = "../sovereign/db/sovereign-db" }
-
-[patch.'https://github.com/Sovereign-Labs/Jupiter.git']
-jupiter = { path = "../jupiter" }
