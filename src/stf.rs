@@ -3,6 +3,7 @@ use crate::batch::Batch;
 use crate::tx_verifier::{RawTx, TxVerifier};
 
 use sov_modules_api::{Context, DispatchCall, Genesis};
+use tracing::info;
 
 use crate::tx_hooks::TxHooks;
 use sov_state::{Storage, WorkingSet};
@@ -77,6 +78,7 @@ where
         let mut events = Vec::new();
 
         // Run the stateless verification.
+        info!("Running stateless verification");
         let txs = self
             .tx_verifier
             .verify_txs_stateless(batch.take_transactions())
@@ -85,16 +87,21 @@ where
 
         for tx in txs {
             batch_workspace = batch_workspace.to_revertable();
+            info!("Running pre-dispatch hook");
             // Run the stateful verification, possibly modifies the state.
             let verified_tx = self
                 .tx_hooks
                 .pre_dispatch_tx_hook(tx, &mut batch_workspace)
                 .or(Err(ConsensusSetUpdate::slashing(sequencer)))?;
 
+            info!("Dispatching call");
             if let Ok(msg) = RT::decode_call(&verified_tx.runtime_msg) {
+                info!("Decoded call");
                 let ctx = C::new(verified_tx.sender.clone());
+                info!("executing runtime call");
                 let tx_result = self.runtime.dispatch_call(msg, &mut batch_workspace, &ctx);
 
+                info!("executing  post hook");
                 self.tx_hooks
                     .post_dispatch_tx_hook(verified_tx, &mut batch_workspace);
 
@@ -110,6 +117,7 @@ where
                     }
                 }
             } else {
+                info!("failed to decode call");
                 // If the serialization is invalid, the sequencer is malicious. Slash them.
                 batch_workspace.revert();
                 return Err(ConsensusSetUpdate::slashing(sequencer));

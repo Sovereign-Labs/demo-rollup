@@ -1,11 +1,11 @@
 use batch::Batch;
+use context::DemoContext;
 use jsonrpsee::http_client::HeaderMap;
 use jupiter::{
     da_app::{CelestiaApp, TmHash},
     da_service::{CelestiaService, FilteredCelestiaBlock},
 };
 use sha2::{Digest, Sha256};
-use sov_modules_api::mocks::MockContext;
 use sov_state::ProverStorage;
 use sovereign_db::{
     ledger_db::{LedgerDB, SlotCommitBuilder},
@@ -29,6 +29,7 @@ use crate::{
     data_generation::QueryGenerator, helpers::run_query, runtime::Runtime, tx_hooks::DemoAppTxHooks,
 };
 mod batch;
+mod context;
 mod data_generation;
 mod helpers;
 mod runtime;
@@ -36,7 +37,7 @@ mod stf;
 mod tx_hooks;
 mod tx_verifier;
 
-type C = MockContext;
+type C = DemoContext;
 type DemoApp = Demo<C, DemoAppTxVerifier<C>, Runtime<C>, DemoAppTxHooks<C>>;
 const CELESTIA_NODE_AUTH_TOKEN: &'static str = "";
 
@@ -70,7 +71,7 @@ const DATA_DIR_LOCATION: &'static str = "demo_data";
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
     let subscriber = tracing_subscriber::fmt()
-        .with_max_level(Level::WARN)
+        .with_max_level(Level::INFO)
         .finish();
     tracing::subscriber::set_global_default(subscriber)
         .map_err(|_err| eprintln!("Unable to set global default subscriber"))
@@ -97,7 +98,6 @@ async fn main() -> Result<(), anyhow::Error> {
     }
     let last_slot_processed_before_shutdown = item_numbers.slot_number - 1;
 
-    dbg!(&item_numbers);
     println!("Beginning sync from da slot {}...", START_HEIGHT);
     for i in 0.. {
         let height = START_HEIGHT + i;
