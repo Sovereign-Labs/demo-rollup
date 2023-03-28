@@ -7,7 +7,6 @@ use jupiter::{
 use sha2::{Digest, Sha256};
 use sov_modules_api::mocks::MockContext;
 use sov_state::ProverStorage;
-mod data_generation;
 use sovereign_db::{
     ledger_db::{LedgerDB, SlotCommitBuilder},
     schema::types::{
@@ -30,6 +29,7 @@ use crate::{
     data_generation::QueryGenerator, helpers::run_query, runtime::Runtime, tx_hooks::DemoAppTxHooks,
 };
 mod batch;
+mod data_generation;
 mod helpers;
 mod runtime;
 mod stf;

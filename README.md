@@ -27,7 +27,7 @@ Sync a Celestia light node running on the Arabica testnet
 1. Initialize the node: `celestia light init --p2p.network arabica`
 1. Start the node with rpc on port 11111: `celestia light start --core.ip https://limani.celestia-devops.dev --p2p.network arabica --gateway --rpc.port 11111`
 1. Obtain a JWT for RPC access: `celestia light auth admin --p2p.network arabica`
-1. Copy the JWT and and save it in main.rs as `const CELESTIA_NODE_AUTH_TOKEN`
+1. Copy the JWT and and save it in main.rs as `const CELESTIA_NODE_AUTH_TOKEN`. Be careful to paste the entire JWT - it may wrap across several lines in your terminal.
 1. Wait a few minutes for your Celestia node to sync. It needs to have reached at least block `293681` before the demo can run properly.
 
 Once your Celestia node is up and running, simply `cargo run` to test out the prototype.
