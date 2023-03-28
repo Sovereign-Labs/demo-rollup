@@ -25,8 +25,8 @@ Set up a Celestia light node running on the Arabica testnet
 1. Build and install the celestia binary: `make build && make go-install`
 1. Build celestia's key management tool `make cel-key`
 1. Initialize the node: `celestia light init --p2p.network arabica`
-1. Start the node with rpc on port 11111: `./celestia light start --core.ip https://limani.celestia-devops.dev --p2p.network arabica --gateway --rpc.port 11111`
-1. Obtain a JWT for RPC access: `./celestia light auth admin --p2p.network arabica`
+1. Start the node with rpc on port 11111: `celestia light start --core.ip https://limani.celestia-devops.dev --p2p.network arabica --gateway --rpc.port 11111`
+1. Obtain a JWT for RPC access: `celestia light auth admin --p2p.network arabica`
 1. Copy the JWT and and save it in main.rs as `const NODE_AUTH_TOKEN`
 
 Once your Celestia node is up and running, simply `cargo run` to test out the prototype.
