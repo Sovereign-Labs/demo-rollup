@@ -2,6 +2,7 @@
 name = "sov-demo"
 version = "0.1.0"
 edition = "2021"
+resolver = "2"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -11,14 +12,14 @@ tokio = { version = "1", features = ["full"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 sha2 = "0.10.6"
-jupiter = { git = "https://github.com/Sovereign-Labs/Jupiter.git" }
-accounts = { git = "https://github.com/Sovereign-Labs/sovereign.git" }
-election = { git = "https://github.com/Sovereign-Labs/sovereign.git" }
-sovereign-sdk = { git = "https://github.com/Sovereign-Labs/sovereign.git" }
-sov-state = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"] }
-sov-modules-api = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["mocks"] }
-sov-modules-macros = { git = "https://github.com/Sovereign-Labs/sovereign.git" }
-sovereign-db = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"] }
+jupiter = { git = "https://github.com/Sovereign-Labs/Jupiter.git", rev = "43b3b4ce86ad0fa2a925e590275c68f7e4483438" }
+accounts = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "3f21032e7414400587f734abdefa3fd9c6081b25" }
+election = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "3f21032e7414400587f734abdefa3fd9c6081b25" }
+sovereign-sdk = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "3f21032e7414400587f734abdefa3fd9c6081b25" }
+sov-state = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "3f21032e7414400587f734abdefa3fd9c6081b25" }
+sov-modules-api = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["mocks"], rev = "3f21032e7414400587f734abdefa3fd9c6081b25" }
+sov-modules-macros = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "3f21032e7414400587f734abdefa3fd9c6081b25" }
+sovereign-db = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "3f21032e7414400587f734abdefa3fd9c6081b25" }
 tracing = "0.1.37"
 tracing-subscriber = "0.3.16"
 
