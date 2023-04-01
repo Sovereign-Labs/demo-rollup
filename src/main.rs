@@ -34,7 +34,6 @@ mod context;
 mod data_generation;
 mod helpers;
 mod runtime;
-mod stf;
 mod tx_hooks_impl;
 mod tx_verifier_impl;
 
