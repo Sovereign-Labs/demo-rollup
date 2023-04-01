@@ -1,4 +1,3 @@
-use context::DemoContext;
 use jsonrpsee::http_client::HeaderMap;
 use jupiter::{
     da_app::{CelestiaApp, TmHash},
@@ -6,6 +5,7 @@ use jupiter::{
 };
 use sha2::{Digest, Sha256};
 use sov_app_template::{AppTemplate, Batch};
+use sov_modules_api::mocks::MockContext;
 use sov_state::ProverStorage;
 use sovereign_db::{
     ledger_db::{LedgerDB, SlotCommitBuilder},
@@ -30,14 +30,13 @@ use crate::{
     tx_hooks_impl::DemoAppTxHooks,
 };
 
-mod context;
 mod data_generation;
 mod helpers;
 mod runtime;
 mod tx_hooks_impl;
 mod tx_verifier_impl;
 
-type C = DemoContext;
+type C = MockContext;
 type DemoApp = AppTemplate<C, DemoAppTxVerifier<C>, Runtime<C>, DemoAppTxHooks<C>>;
 const CELESTIA_NODE_AUTH_TOKEN: &'static str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBbGxvdyI6WyJwdWJsaWMiLCJyZWFkIiwid3JpdGUiLCJhZG1pbiJdfQ.NuLolaPIYqxI1L6ISDq3zZ9aPeHFVw5wHt8DQrN3ct8";
 

@@ -13,14 +13,14 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 sha2 = "0.10.6"
 jupiter = { path ="../Jupiter"}
-sov-app-template = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "223d04a" }
-accounts = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "223d04a" }
-election = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "223d04a" }
-sovereign-sdk = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "223d04a" }
-sov-state = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "223d04a" }
-sov-modules-api = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["mocks"], rev = "223d04a" }
-sov-modules-macros = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "223d04a" }
-sovereign-db = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "223d04a" }
+sov-app-template = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "bdba333993792bab17e4e0348232e0d14b19622b" }
+accounts = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "bdba333993792bab17e4e0348232e0d14b19622b" }
+election = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "bdba333993792bab17e4e0348232e0d14b19622b" }
+sovereign-sdk = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "bdba333993792bab17e4e0348232e0d14b19622b" }
+sov-state = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "bdba333993792bab17e4e0348232e0d14b19622b" }
+sov-modules-api = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["mocks"], rev = "bdba333993792bab17e4e0348232e0d14b19622b" }
+sov-modules-macros = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "bdba333993792bab17e4e0348232e0d14b19622b" }
+sovereign-db = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "bdba333993792bab17e4e0348232e0d14b19622b" }
 tracing = "0.1.37"
 tracing-subscriber = "0.3.16"
 
