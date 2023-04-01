@@ -1,4 +1,4 @@
-use borsh::{BorshDeserialize, BorshSerialize};
+/*use borsh::{BorshDeserialize, BorshSerialize};
 
 // Items that should go in prelude
 use jmt::SimpleHasher;
@@ -9,7 +9,7 @@ use sovereign_sdk::{
     jmt,
 };
 
-use crate::tx_verifier::RawTx;
+use crate::tx_verifier_impl::RawTx;
 
 #[derive(Debug, PartialEq, BorshDeserialize, BorshSerialize, Clone)]
 pub struct Batch {
@@ -39,3 +39,4 @@ impl CanonicalHash for RawTx {
         <MockContext as Spec>::Hasher::hash(&self.data)
     }
 }
+*/
