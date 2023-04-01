@@ -29,7 +29,7 @@ use crate::{
     data_generation::QueryGenerator, helpers::run_query, runtime::Runtime,
     tx_hooks_impl::DemoAppTxHooks,
 };
-mod batch;
+
 mod context;
 mod data_generation;
 mod helpers;
@@ -169,6 +169,7 @@ async fn main() -> Result<(), anyhow::Error> {
                 }
             }
         }
+
         demo.end_slot();
         data_to_persist.slot_data = Some(StoredSlot {
             hash: DbHash::new(slot_hash.to_vec()),
@@ -179,14 +180,14 @@ async fn main() -> Result<(), anyhow::Error> {
         item_numbers.batch_number += num_batches as u64;
         ledger_db.commit_slot(data_to_persist.finalize()?)?;
 
-        /*println!(
+        println!(
             "Current state: {}",
             run_query(
                 &mut demo.runtime,
                 QueryGenerator::generate_query_election_message(),
                 storage.clone(),
             )
-        );*/
+        );
     }
 
     Ok(())
