@@ -38,7 +38,7 @@ mod tx_verifier_impl;
 
 type C = MockContext;
 type DemoApp = AppTemplate<C, DemoAppTxVerifier<C>, Runtime<C>, DemoAppTxHooks<C>>;
-const CELESTIA_NODE_AUTH_TOKEN: &'static str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBbGxvdyI6WyJwdWJsaWMiLCJyZWFkIiwid3JpdGUiLCJhZG1pbiJdfQ.NuLolaPIYqxI1L6ISDq3zZ9aPeHFVw5wHt8DQrN3ct8";
+const CELESTIA_NODE_AUTH_TOKEN: &'static str = "";
 
 const START_HEIGHT: u64 = HEIGHT_OF_FIRST_TXS - 5;
 // I sent 8 demo election transactions at height 293686, generated using the demo app data generator
