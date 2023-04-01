@@ -1,11 +1,11 @@
-use batch::Batch;
-use context::DemoContext;
 use jsonrpsee::http_client::HeaderMap;
 use jupiter::{
     da_app::{CelestiaApp, TmHash},
     da_service::{CelestiaService, FilteredCelestiaBlock},
 };
 use sha2::{Digest, Sha256};
+use sov_app_template::{AppTemplate, Batch};
+use sov_modules_api::mocks::MockContext;
 use sov_state::ProverStorage;
 use sovereign_db::{
     ledger_db::{LedgerDB, SlotCommitBuilder},
@@ -21,24 +21,23 @@ use sovereign_sdk::{
 };
 use sovereign_sdk::{da::DaLayerTrait, stf::StateTransitionFunction};
 use sovereign_sdk::{db::SlotStore, serial::Decode};
-use stf::Demo;
+
 use tracing::Level;
-use tx_verifier::DemoAppTxVerifier;
+use tx_verifier_impl::DemoAppTxVerifier;
 
 use crate::{
-    data_generation::QueryGenerator, helpers::run_query, runtime::Runtime, tx_hooks::DemoAppTxHooks,
+    data_generation::QueryGenerator, helpers::run_query, runtime::Runtime,
+    tx_hooks_impl::DemoAppTxHooks,
 };
-mod batch;
-mod context;
+
 mod data_generation;
 mod helpers;
 mod runtime;
-mod stf;
-mod tx_hooks;
-mod tx_verifier;
+mod tx_hooks_impl;
+mod tx_verifier_impl;
 
-type C = DemoContext;
-type DemoApp = Demo<C, DemoAppTxVerifier<C>, Runtime<C>, DemoAppTxHooks<C>>;
+type C = MockContext;
+type DemoApp = AppTemplate<C, DemoAppTxVerifier<C>, Runtime<C>, DemoAppTxHooks<C>>;
 const CELESTIA_NODE_AUTH_TOKEN: &'static str = "";
 
 const START_HEIGHT: u64 = HEIGHT_OF_FIRST_TXS - 5;
@@ -168,6 +167,7 @@ async fn main() -> Result<(), anyhow::Error> {
                 }
             }
         }
+
         demo.end_slot();
         data_to_persist.slot_data = Some(StoredSlot {
             hash: DbHash::new(slot_hash.to_vec()),
@@ -177,6 +177,7 @@ async fn main() -> Result<(), anyhow::Error> {
         });
         item_numbers.batch_number += num_batches as u64;
         ledger_db.commit_slot(data_to_persist.finalize()?)?;
+
         println!(
             "Current state: {}",
             run_query(

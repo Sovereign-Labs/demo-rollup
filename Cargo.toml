@@ -12,14 +12,15 @@ tokio = { version = "1", features = ["full"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 sha2 = "0.10.6"
-jupiter = { git = "https://github.com/Sovereign-Labs/Jupiter.git", rev = "43b3b4ce86ad0fa2a925e590275c68f7e4483438" }
-accounts = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "3f21032e7414400587f734abdefa3fd9c6081b25" }
-election = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "3f21032e7414400587f734abdefa3fd9c6081b25" }
-sovereign-sdk = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "3f21032e7414400587f734abdefa3fd9c6081b25" }
-sov-state = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "3f21032e7414400587f734abdefa3fd9c6081b25" }
-sov-modules-api = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["mocks"], rev = "3f21032e7414400587f734abdefa3fd9c6081b25" }
-sov-modules-macros = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "3f21032e7414400587f734abdefa3fd9c6081b25" }
-sovereign-db = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "3f21032e7414400587f734abdefa3fd9c6081b25" }
+jupiter = { path ="../Jupiter"}
+sov-app-template = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "bfdb58159ff9215a84aa60b9a4d3ce1f32136597" }
+accounts = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "bfdb58159ff9215a84aa60b9a4d3ce1f32136597" }
+election = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "bfdb58159ff9215a84aa60b9a4d3ce1f32136597" }
+sovereign-sdk = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "bfdb58159ff9215a84aa60b9a4d3ce1f32136597" }
+sov-state = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "bfdb58159ff9215a84aa60b9a4d3ce1f32136597" }
+sov-modules-api = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["mocks"], rev = "bfdb58159ff9215a84aa60b9a4d3ce1f32136597" }
+sov-modules-macros = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "bfdb58159ff9215a84aa60b9a4d3ce1f32136597" }
+sovereign-db = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "bfdb58159ff9215a84aa60b9a4d3ce1f32136597" }
 tracing = "0.1.37"
 tracing-subscriber = "0.3.16"
 
