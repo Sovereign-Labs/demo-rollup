@@ -1,3 +1,4 @@
+use crate::runtime::GenesisConfig;
 use jsonrpsee::http_client::HeaderMap;
 use jupiter::{
     da_app::{CelestiaApp, TmHash},
@@ -10,14 +11,15 @@ use sov_state::ProverStorage;
 use sovereign_db::{
     ledger_db::{LedgerDB, SlotCommitBuilder},
     schema::types::{
-        BatchNumber, DbBytes, DbHash, EventNumber, Status, StoredBatch, StoredSlot,
-        StoredTransaction, TxNumber,
+        BatchNumber, DbBytes, EventNumber, Status, StoredBatch, StoredSlot, StoredTransaction,
+        TxNumber,
     },
 };
 use sovereign_sdk::{
     da::BlobTransactionTrait,
     serial::Encode,
     services::da::{DaService, SlotData},
+    spec::RollupSpec,
 };
 use sovereign_sdk::{da::DaLayerTrait, stf::StateTransitionFunction};
 use sovereign_sdk::{db::SlotStore, serial::Decode};
@@ -36,8 +38,20 @@ mod runtime;
 mod tx_hooks_impl;
 mod tx_verifier_impl;
 
+#[derive(Debug, Clone)]
+struct Spec;
+
+impl RollupSpec for Spec {
+    type SlotData = FilteredCelestiaBlock;
+
+    type Stf = DemoApp;
+
+    type Hasher = Sha256;
+}
+
 type C = MockContext;
-type DemoApp = AppTemplate<C, DemoAppTxVerifier<C>, Runtime<C>, DemoAppTxHooks<C>>;
+type DemoApp =
+    AppTemplate<C, DemoAppTxVerifier<C>, Runtime<C>, DemoAppTxHooks<C>, GenesisConfig<C>>;
 const CELESTIA_NODE_AUTH_TOKEN: &'static str = "";
 
 const START_HEIGHT: u64 = HEIGHT_OF_FIRST_TXS - 5;
@@ -76,13 +90,14 @@ async fn main() -> Result<(), anyhow::Error> {
         .map_err(|_err| eprintln!("Unable to set global default subscriber"))
         .expect("Cannot fail to set subscriber");
     let cel_service = default_celestia_service();
-    let ledger_db = LedgerDB::<FilteredCelestiaBlock>::with_path(DATA_DIR_LOCATION).unwrap();
+    let ledger_db = LedgerDB::<Spec>::with_path(DATA_DIR_LOCATION).unwrap();
     let storage = ProverStorage::with_path(DATA_DIR_LOCATION).unwrap();
     let mut demo = DemoApp::new(
         storage.clone(),
         Runtime::new(),
         DemoAppTxVerifier::new(),
         DemoAppTxHooks::new(),
+        GenesisConfig::new(()),
     );
     let da_app = CelestiaApp {
         db: ledger_db.clone(),
@@ -132,7 +147,8 @@ async fn main() -> Result<(), anyhow::Error> {
             let tx_start = item_numbers.tx_number;
             let num_txs = batch.txs.len();
             let mut batch_to_store = StoredBatch {
-                hash: DbBytes::new(batch_hash.to_vec()),
+                sender: raw_batch.sender.as_ref().to_vec(),
+                hash: batch_hash,
                 extra_data: DbBytes::new(raw_batch.sender.as_ref().to_vec()),
                 txs: TxNumber(tx_start)..TxNumber(tx_start + num_txs as u64),
                 status: Status::Skipped,
@@ -149,7 +165,7 @@ async fn main() -> Result<(), anyhow::Error> {
                         let end_event_number = start_event_number + events.len() as u64;
                         item_numbers.event_number = end_event_number;
                         StoredTransaction {
-                            hash: DbHash::new(sha2(&tx.data[..]).to_vec()),
+                            hash: sha2(&tx.data[..]),
                             events: EventNumber(start_event_number)..EventNumber(end_event_number),
                             data: DbBytes::new(tx.data),
                             status: Status::Applied,
@@ -170,7 +186,7 @@ async fn main() -> Result<(), anyhow::Error> {
 
         demo.end_slot();
         data_to_persist.slot_data = Some(StoredSlot {
-            hash: DbHash::new(slot_hash.to_vec()),
+            hash: slot_hash,
             extra_data: DbBytes::new(slot_extra_data),
             batches: BatchNumber(item_numbers.batch_number)
                 ..BatchNumber(item_numbers.batch_number + num_batches as u64),
