@@ -1,4 +1,5 @@
 use crate::runtime::GenesisConfig;
+use bank::TokenConfig;
 use jsonrpsee::http_client::HeaderMap;
 use jupiter::{
     da_app::{CelestiaApp, TmHash},
@@ -6,7 +7,7 @@ use jupiter::{
 };
 use sha2::{Digest, Sha256};
 use sov_app_template::{AppTemplate, Batch};
-use sov_modules_api::mocks::MockContext;
+use sov_modules_api::{mocks::MockContext, Address};
 use sov_state::ProverStorage;
 use sovereign_db::{
     ledger_db::{LedgerDB, SlotCommitBuilder},
@@ -27,13 +28,11 @@ use sovereign_sdk::{db::SlotStore, serial::Decode};
 use tracing::Level;
 use tx_verifier_impl::DemoAppTxVerifier;
 
-use crate::{
-    data_generation::QueryGenerator, helpers::run_query, runtime::Runtime,
-    tx_hooks_impl::DemoAppTxHooks,
-};
+use crate::{runtime::Runtime, tx_hooks_impl::DemoAppTxHooks};
 
 mod data_generation;
 mod helpers;
+mod rpc;
 mod runtime;
 mod tx_hooks_impl;
 mod tx_verifier_impl;
@@ -83,8 +82,10 @@ const DATA_DIR_LOCATION: &'static str = "demo_data";
 
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
+    let sequencer_address: Address = [1u8; 32].into();
+
     let subscriber = tracing_subscriber::fmt()
-        .with_max_level(Level::INFO)
+        .with_max_level(Level::WARN)
         .finish();
     tracing::subscriber::set_global_default(subscriber)
         .map_err(|_err| eprintln!("Unable to set global default subscriber"))
@@ -97,11 +98,26 @@ async fn main() -> Result<(), anyhow::Error> {
         Runtime::new(),
         DemoAppTxVerifier::new(),
         DemoAppTxHooks::new(),
-        GenesisConfig::new(()),
+        GenesisConfig::new(
+            (),
+            bank::BankConfig {
+                tokens: vec![TokenConfig {
+                    token_name: "sovereign".to_string(),
+                    address_and_balances: vec![(sequencer_address, 1000)],
+                }],
+            },
+            accounts::AccountConfig { pub_keys: vec![] },
+        ),
     );
     let da_app = CelestiaApp {
         db: ledger_db.clone(),
     };
+
+    let rpc_ledger = ledger_db.clone();
+    let rpc_storage = storage.clone();
+
+    let _rpc_handle = rpc::RpcProvider::start(rpc_ledger, rpc_storage).await?;
+
     let mut item_numbers = ledger_db.get_next_items_numbers();
     if item_numbers.slot_number == 1 {
         print!("No history detected. Initializing chain...");
@@ -118,8 +134,6 @@ async fn main() -> Result<(), anyhow::Error> {
         if last_slot_processed_before_shutdown > i {
             println!("Slot at {} has already been processed! Skipping", height);
             continue;
-        } else {
-            println!("Processing slot at {}", height);
         }
 
         let filtered_block: FilteredCelestiaBlock = cel_service.get_finalized_at(height).await?;
@@ -133,7 +147,6 @@ async fn main() -> Result<(), anyhow::Error> {
 
         demo.begin_slot();
         let num_batches = batches.len();
-        println!("  Found {} batches.", num_batches);
         for raw_batch in batches {
             let mut data = raw_batch.data();
             let batch = match Batch::decode(&mut data) {
@@ -193,15 +206,6 @@ async fn main() -> Result<(), anyhow::Error> {
         });
         item_numbers.batch_number += num_batches as u64;
         ledger_db.commit_slot(data_to_persist.finalize()?)?;
-
-        println!(
-            "Current state: {}",
-            run_query(
-                &mut demo.runtime,
-                QueryGenerator::generate_query_election_message(),
-                storage.clone(),
-            )
-        );
     }
 
     Ok(())

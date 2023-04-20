@@ -23,7 +23,7 @@ impl<C: sov_modules_api::Context> Transaction<C> {
         }
     }
 }
-
+#[derive(Clone)]
 pub(crate) struct DemoAppTxVerifier<C: Context> {
     _phantom: PhantomData<C>,
 }
