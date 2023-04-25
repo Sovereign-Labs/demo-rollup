@@ -4,11 +4,13 @@ use bank::{
     query::{BankRpcImpl, BankRpcServer},
     Bank,
 };
-use jsonrpsee::server::ServerHandle;
+use jsonrpsee::{server::ServerHandle, RpcModule};
 use sov_modules_api::mocks::MockContext;
 use sov_state::{mocks::MockStorageSpec, ProverStorage, WorkingSet};
 use sovereign_db::ledger_db::LedgerDB;
-use sovereign_sdk::rpc::{LedgerRpcProvider, QueryMode, SlotIdentifier};
+use sovereign_sdk::rpc::{
+    BatchIdentifier, EventIdentifier, LedgerRpcProvider, QueryMode, SlotIdentifier, TxIdentifier,
+};
 
 use crate::{runtime::Runtime, tx_verifier_impl::DemoAppTxVerifier, Spec};
 
@@ -49,34 +51,49 @@ impl RpcProvider {
             _tx_verifier: tx_verifier,
         };
 
-        let ledger_rpc = bank_rpc.clone();
-
         let mut bank_rpc = bank_rpc.into_rpc();
-        bank_rpc.register_method("chain_getSlots", move |params, _| {
-            let slot_ids: Vec<SlotIdentifier>;
-            let query_mode: QueryMode;
-            (slot_ids, query_mode) = params.parse()?;
-            ledger_rpc
-                .get_slots(&slot_ids, query_mode)
-                .map_err(|e| e.into())
-        })?;
+
+        register_ledger_rpc(&mut bank_rpc)?;
 
         server.start(bank_rpc)
     }
 }
 
-// TODO: Re-implement
-// impl TransactionRpcProvider for RpcProvider {
-//     type Transaction = RawTx;
+fn register_ledger_rpc(rpc: &mut RpcModule<RpcProvider>) -> Result<(), jsonrpsee::core::Error> {
+    rpc.register_method("ledger_head", move |_, db| {
+        db.get_head().map_err(|e| e.into())
+    })?;
 
-//     fn check_transaction(&self, tx: Self::Transaction) -> Result<(), anyhow::Error> {
-//         self.tx_verifier.verify_tx_stateless(tx).map(|_| ())
-//     }
+    rpc.register_method("ledger_getSlots", move |params, db| {
+        let ids: Vec<SlotIdentifier>;
+        let query_mode: QueryMode;
+        (ids, query_mode) = params.parse()?;
+        db.get_slots(&ids, query_mode).map_err(|e| e.into())
+    })?;
 
-//     fn submit_transaction(&self, tx: Self::Transaction) -> Result<(), anyhow::Error> {
-//         todo!()
-//     }
-// }
+    rpc.register_method("ledger_getBatches", move |params, db| {
+        let ids: Vec<BatchIdentifier>;
+        let query_mode: QueryMode;
+        (ids, query_mode) = params.parse()?;
+        db.get_batches(&ids, query_mode).map_err(|e| e.into())
+    })?;
+
+    rpc.register_method("ledger_getTransactions", move |params, db| {
+        let ids: Vec<TxIdentifier>;
+        let query_mode: QueryMode;
+        (ids, query_mode) = params.parse()?;
+        db.get_transactions(&ids, query_mode).map_err(|e| e.into())
+    })?;
+
+    rpc.register_method("ledger_getEvents", move |params, db| {
+        let ids: Vec<EventIdentifier> = params.parse()?;
+        db.get_events(&ids).map_err(|e| e.into())
+    })?;
+
+    Ok(())
+}
+
+// TODO: implement TransactionRpcProvider and expose an endpoint for it
 
 /// Delegate all the Ledger RPC methods to the LedgerDB.
 impl LedgerRpcProvider for RpcProvider {
@@ -87,6 +104,10 @@ impl LedgerRpcProvider for RpcProvider {
     type TxResponse = <LedgerDB<Spec> as LedgerRpcProvider>::TxResponse;
 
     type EventResponse = <LedgerDB<Spec> as LedgerRpcProvider>::EventResponse;
+
+    fn get_head(&self) -> Result<Option<Self::SlotResponse>, anyhow::Error> {
+        self.ledger_db.get_head()
+    }
 
     fn get_slots(
         &self,
@@ -115,7 +136,7 @@ impl LedgerRpcProvider for RpcProvider {
     fn get_events(
         &self,
         event_ids: &[sovereign_sdk::rpc::EventIdentifier],
-    ) -> Result<Option<Vec<Self::EventResponse>>, anyhow::Error> {
+    ) -> Result<Vec<Option<Self::EventResponse>>, anyhow::Error> {
         self.ledger_db.get_events(event_ids)
     }
 }
