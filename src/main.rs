@@ -30,17 +30,6 @@ mod runtime;
 mod tx_hooks_impl;
 mod tx_verifier_impl;
 
-#[derive(Debug, Clone)]
-struct Spec;
-
-impl RollupSpec for Spec {
-    type SlotData = FilteredCelestiaBlock;
-
-    type Stf = DemoApp;
-
-    type Hasher = Sha256;
-}
-
 type C = MockContext;
 type DemoApp =
     AppTemplate<C, DemoAppTxVerifier<C>, Runtime<C>, DemoAppTxHooks<C>, GenesisConfig<C>>;
