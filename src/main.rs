@@ -1,10 +1,7 @@
 use crate::runtime::GenesisConfig;
 use bank::TokenConfig;
 use jsonrpsee::http_client::HeaderMap;
-use jupiter::{
-    da_app::{CelestiaApp, TmHash},
-    da_service::{CelestiaService, FilteredCelestiaBlock},
-};
+use jupiter::da_service::{CelestiaService, FilteredCelestiaBlock};
 use sha2::{Digest, Sha256};
 use sov_app_template::{AppTemplate, Batch};
 use sov_modules_api::{mocks::MockContext, Address};
@@ -16,14 +13,10 @@ use sovereign_db::{
         TxNumber,
     },
 };
-use sovereign_sdk::{
-    da::BlobTransactionTrait,
-    serial::Encode,
-    services::da::{DaService, SlotData},
-    spec::RollupSpec,
-};
-use sovereign_sdk::{da::DaLayerTrait, stf::StateTransitionFunction};
-use sovereign_sdk::{db::SlotStore, serial::Decode};
+use sovereign_sdk::serial::Decode;
+use sovereign_sdk::services::da::SlotData;
+use sovereign_sdk::{da::BlobTransactionTrait, stf::StateTransitionFunction};
+use sovereign_sdk::{serial::Encode, services::da::DaService};
 
 use tracing::Level;
 use tx_verifier_impl::DemoAppTxVerifier;
@@ -37,21 +30,10 @@ mod runtime;
 mod tx_hooks_impl;
 mod tx_verifier_impl;
 
-#[derive(Debug, Clone)]
-struct Spec;
-
-impl RollupSpec for Spec {
-    type SlotData = FilteredCelestiaBlock;
-
-    type Stf = DemoApp;
-
-    type Hasher = Sha256;
-}
-
 type C = MockContext;
 type DemoApp =
     AppTemplate<C, DemoAppTxVerifier<C>, Runtime<C>, DemoAppTxHooks<C>, GenesisConfig<C>>;
-const CELESTIA_NODE_AUTH_TOKEN: &'static str = "";
+const CELESTIA_NODE_AUTH_TOKEN: &'static str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBbGxvdyI6WyJwdWJsaWMiLCJyZWFkIiwid3JpdGUiLCJhZG1pbiJdfQ.nHzh7kWvC3puCYgcMJRuNlMudwf6xGagETNdQyRQQ_s";
 
 const START_HEIGHT: u64 = HEIGHT_OF_FIRST_TXS - 5;
 // I sent 8 demo election transactions at height 293686, generated using the demo app data generator
@@ -91,7 +73,7 @@ async fn main() -> Result<(), anyhow::Error> {
         .map_err(|_err| eprintln!("Unable to set global default subscriber"))
         .expect("Cannot fail to set subscriber");
     let cel_service = default_celestia_service();
-    let ledger_db = LedgerDB::<Spec>::with_path(DATA_DIR_LOCATION).unwrap();
+    let ledger_db = LedgerDB::with_path(DATA_DIR_LOCATION).unwrap();
     let storage = ProverStorage::with_path(DATA_DIR_LOCATION).unwrap();
     let mut demo = DemoApp::new(
         storage.clone(),
@@ -109,9 +91,6 @@ async fn main() -> Result<(), anyhow::Error> {
             accounts::AccountConfig { pub_keys: vec![] },
         ),
     );
-    let da_app = CelestiaApp {
-        db: ledger_db.clone(),
-    };
 
     let rpc_ledger = ledger_db.clone();
     let rpc_storage = storage.clone();
@@ -132,18 +111,13 @@ async fn main() -> Result<(), anyhow::Error> {
     for i in 0.. {
         let height = START_HEIGHT + i;
         if last_slot_processed_before_shutdown > i {
-            println!("Slot at {} has already been processed! Skipping", height);
             continue;
         }
 
         let filtered_block: FilteredCelestiaBlock = cel_service.get_finalized_at(height).await?;
-        let next_block_hash = TmHash(filtered_block.header.header.hash());
         let slot_hash = filtered_block.hash();
-        let slot_extra_data = filtered_block.extra_data_for_storage();
-
-        ledger_db.insert(slot_hash.clone(), filtered_block);
         let mut data_to_persist = SlotCommitBuilder::default();
-        let batches = da_app.get_relevant_txs(&next_block_hash);
+        let batches = cel_service.extract_relevant_txs(filtered_block);
 
         demo.begin_slot();
         let num_batches = batches.len();
@@ -200,7 +174,7 @@ async fn main() -> Result<(), anyhow::Error> {
         demo.end_slot();
         data_to_persist.slot_data = Some(StoredSlot {
             hash: slot_hash,
-            extra_data: DbBytes::new(slot_extra_data),
+            extra_data: DbBytes::new(vec![]),
             batches: BatchNumber(item_numbers.batch_number)
                 ..BatchNumber(item_numbers.batch_number + num_batches as u64),
         });
