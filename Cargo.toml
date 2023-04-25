@@ -13,20 +13,17 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 sha2 = "0.10.6"
 jupiter = { path ="../Jupiter"}
-sov-app-template = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "bfdb58159ff9215a84aa60b9a4d3ce1f32136597" }
-accounts = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "bfdb58159ff9215a84aa60b9a4d3ce1f32136597" }
-election = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "bfdb58159ff9215a84aa60b9a4d3ce1f32136597" }
-sovereign-sdk = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "bfdb58159ff9215a84aa60b9a4d3ce1f32136597" }
-sov-state = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "bfdb58159ff9215a84aa60b9a4d3ce1f32136597" }
-sov-modules-api = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["mocks"], rev = "bfdb58159ff9215a84aa60b9a4d3ce1f32136597" }
-sov-modules-macros = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "bfdb58159ff9215a84aa60b9a4d3ce1f32136597" }
-sovereign-db = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "bfdb58159ff9215a84aa60b9a4d3ce1f32136597" }
+sov-app-template = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "abfe1485f9c30e2c4a41ee8c9a18d9d646013c9c" }
+accounts = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "abfe1485f9c30e2c4a41ee8c9a18d9d646013c9c" }
+bank = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "abfe1485f9c30e2c4a41ee8c9a18d9d646013c9c" }
+election = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "abfe1485f9c30e2c4a41ee8c9a18d9d646013c9c" }
+sovereign-sdk = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "abfe1485f9c30e2c4a41ee8c9a18d9d646013c9c" }
+sov-state = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "abfe1485f9c30e2c4a41ee8c9a18d9d646013c9c" }
+sov-modules-api = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["mocks"], rev = "abfe1485f9c30e2c4a41ee8c9a18d9d646013c9c" }
+sov-modules-macros = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "abfe1485f9c30e2c4a41ee8c9a18d9d646013c9c" }
+sovereign-db = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "abfe1485f9c30e2c4a41ee8c9a18d9d646013c9c" }
 tracing = "0.1.37"
 tracing-subscriber = "0.3.16"
 
 anyhow = "1.0.62"
-jsonrpsee = { version = "0.16.2", features = ["http-client"] }
-
-[patch.crates-io]
-# Patch borsh until "bytes" support is added
-borsh = { git = "https://github.com/preston-evans98/borsh-rs.git", branch = "release-2" }
+jsonrpsee = { version = "0.16.2", features = ["http-client", "server"] }

@@ -40,7 +40,7 @@ impl<C: Context> TxHooks for DemoAppTxHooks<C> {
     type VerifiedTx = AppVerifiedTx<C>;
 
     fn pre_dispatch_tx_hook(
-        &mut self,
+        &self,
         tx: Transaction<Self::Context>,
         working_set: &mut WorkingSet<<Self::Context as Spec>::Storage>,
     ) -> anyhow::Result<Self::VerifiedTx> {
@@ -54,7 +54,7 @@ impl<C: Context> TxHooks for DemoAppTxHooks<C> {
     }
 
     fn post_dispatch_tx_hook(
-        &mut self,
+        &self,
         tx: Self::VerifiedTx,
         working_set: &mut WorkingSet<<Self::Context as Spec>::Storage>,
     ) {
@@ -64,11 +64,34 @@ impl<C: Context> TxHooks for DemoAppTxHooks<C> {
             // therefore this panic should never happen, we add it for sanity check.
             .unwrap_or_else(|e| panic!("Inconsistent nonce {e}"));
     }
+
+    fn enter_apply_batch(
+        &self,
+        _sequencer: &[u8],
+        _working_set: &mut WorkingSet<<Self::Context as Spec>::Storage>,
+    ) -> anyhow::Result<()> {
+        Ok(())
+    }
+
+    fn post_revert_apply_batch(
+        &self,
+        _working_set: &mut WorkingSet<<Self::Context as Spec>::Storage>,
+    ) -> anyhow::Result<()> {
+        Ok(())
+    }
+
+    fn exit_apply_batch(
+        &self,
+        _amount: u64,
+        _working_set: &mut WorkingSet<<Self::Context as Spec>::Storage>,
+    ) -> anyhow::Result<()> {
+        Ok(())
+    }
 }
 
 impl<C: Context> DemoAppTxHooks<C> {
     fn check_nonce_for_address(
-        &mut self,
+        &self,
         tx_nonce: u64,
         tx_pub_key: C::PublicKey,
         working_set: &mut WorkingSet<C::Storage>,
