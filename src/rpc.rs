@@ -12,11 +12,11 @@ use sovereign_sdk::rpc::{
     BatchIdentifier, EventIdentifier, LedgerRpcProvider, QueryMode, SlotIdentifier, TxIdentifier,
 };
 
-use crate::{runtime::Runtime, tx_verifier_impl::DemoAppTxVerifier, Spec};
+use crate::{runtime::Runtime, tx_verifier_impl::DemoAppTxVerifier};
 
 #[derive(Clone)]
 pub(crate) struct RpcProvider {
-    pub ledger_db: LedgerDB<Spec>,
+    pub ledger_db: LedgerDB,
     pub state_db: ProverStorage<MockStorageSpec>,
     pub runtime: Runtime<MockContext>,
     pub _tx_verifier: DemoAppTxVerifier<MockContext>,
@@ -34,7 +34,7 @@ impl BankRpcImpl<MockContext> for RpcProvider {
 
 impl RpcProvider {
     pub async fn start(
-        ledger_db: LedgerDB<Spec>,
+        ledger_db: LedgerDB,
         state_db: ProverStorage<MockStorageSpec>,
     ) -> Result<ServerHandle, jsonrpsee::core::Error> {
         let address: SocketAddr = "127.0.0.1:12345".parse().unwrap();
@@ -97,13 +97,13 @@ fn register_ledger_rpc(rpc: &mut RpcModule<RpcProvider>) -> Result<(), jsonrpsee
 
 /// Delegate all the Ledger RPC methods to the LedgerDB.
 impl LedgerRpcProvider for RpcProvider {
-    type SlotResponse = <LedgerDB<Spec> as LedgerRpcProvider>::SlotResponse;
+    type SlotResponse = <LedgerDB as LedgerRpcProvider>::SlotResponse;
 
-    type BatchResponse = <LedgerDB<Spec> as LedgerRpcProvider>::BatchResponse;
+    type BatchResponse = <LedgerDB as LedgerRpcProvider>::BatchResponse;
 
-    type TxResponse = <LedgerDB<Spec> as LedgerRpcProvider>::TxResponse;
+    type TxResponse = <LedgerDB as LedgerRpcProvider>::TxResponse;
 
-    type EventResponse = <LedgerDB<Spec> as LedgerRpcProvider>::EventResponse;
+    type EventResponse = <LedgerDB as LedgerRpcProvider>::EventResponse;
 
     fn get_head(&self) -> Result<Option<Self::SlotResponse>, anyhow::Error> {
         self.ledger_db.get_head()
