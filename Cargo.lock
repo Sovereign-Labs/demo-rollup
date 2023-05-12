@@ -5,7 +5,7 @@ version = 3
 [[package]]
 name = "accounts"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=5e43c3ee9b5785abdca33b21c86fd38dbd9285e0#5e43c3ee9b5785abdca33b21c86fd38dbd9285e0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d#c90484449c0d6497fa5d845e38023845393411d1"
 dependencies = [
  "anyhow",
  "borsh",
@@ -17,17 +17,6 @@ dependencies = [
  "sov-state",
  "sovereign-sdk",
  "thiserror",
-]
-
-[[package]]
-name = "ahash"
-version = "0.7.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fcb51a0695d8f838b1ee009b3fbf66bda078cd64590202a864a8f3e8c4315c47"
-dependencies = [
- "getrandom",
- "once_cell",
- "version_check",
 ]
 
 [[package]]
@@ -82,7 +71,7 @@ checksum = "d468802bab17cbc0cc575e9b053f41e72aa36bfa6b7f55e3529ffa43161b97fa"
 [[package]]
 name = "bank"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=5e43c3ee9b5785abdca33b21c86fd38dbd9285e0#5e43c3ee9b5785abdca33b21c86fd38dbd9285e0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d#c90484449c0d6497fa5d845e38023845393411d1"
 dependencies = [
  "anyhow",
  "borsh",
@@ -108,6 +97,12 @@ name = "base64"
 version = "0.21.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a4a4ddaa51a5bc52a6948f74c06d20aaaddb71924eab79b8c97a8c556e942d6a"
+
+[[package]]
+name = "base64ct"
+version = "1.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8c3c1a368f70d6cf7302d78f8f7093da241fb8e8807c05cc9e51a125895a6d5b"
 
 [[package]]
 name = "bech32"
@@ -176,7 +171,7 @@ checksum = "4114279215a005bc675e386011e594e1d9b800918cea18fcadadcce864a2046b"
 dependencies = [
  "borsh-derive",
  "bytes",
- "hashbrown 0.12.3",
+ "hashbrown 0.13.2",
 ]
 
 [[package]]
@@ -292,6 +287,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "const-oid"
+version = "0.9.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "520fbf3c07483f94e3e3ca9d0cfd913d7718ef2483d2cfd91c0d9e91474ab913"
+
+[[package]]
 name = "convert_case"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -334,14 +335,61 @@ dependencies = [
 
 [[package]]
 name = "curve25519-dalek"
-version = "3.2.1"
+version = "3.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "90f9d052967f590a76e62eb387bd0bbb1b000182c3cefe5364db6b7211651bc0"
+checksum = "0b9fdf9972b2bd6af2d913799d9ebc165ea4d2e65878e329d9c6b372c4491b61"
 dependencies = [
  "byteorder",
  "digest 0.9.0",
  "rand_core 0.5.1",
  "subtle",
+ "zeroize",
+]
+
+[[package]]
+name = "curve25519-dalek-ng"
+version = "4.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1c359b7249347e46fb28804470d071c921156ad62b3eef5d34e2ba867533dec8"
+dependencies = [
+ "byteorder",
+ "digest 0.9.0",
+ "rand_core 0.6.4",
+ "subtle-ng",
+ "zeroize",
+]
+
+[[package]]
+name = "demo-app"
+version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d#c90484449c0d6497fa5d845e38023845393411d1"
+dependencies = [
+ "accounts",
+ "anyhow",
+ "bank",
+ "borsh",
+ "election",
+ "schemadb",
+ "sequencer",
+ "serde",
+ "serde_json",
+ "sha2 0.10.6",
+ "sov-app-template",
+ "sov-modules-api",
+ "sov-modules-macros",
+ "sov-state",
+ "sovereign-db",
+ "sovereign-sdk",
+ "value-setter",
+]
+
+[[package]]
+name = "der"
+version = "0.7.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "05e58dffcdcc8ee7b22f0c1f71a69243d7c2d9ad87b5a14361f2424a1565c219"
+dependencies = [
+ "const-oid",
  "zeroize",
 ]
 
@@ -383,7 +431,30 @@ version = "1.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "91cff35c70bba8a626e3185d8cd48cc11b5437e1a5bcd15b9b5fa3c64b6dfee7"
 dependencies = [
- "signature",
+ "signature 1.6.4",
+]
+
+[[package]]
+name = "ed25519"
+version = "2.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5fb04eee5d9d907f29e80ee6b0e78f7e2c82342c63e3580d8c4f69d9d5aad963"
+dependencies = [
+ "pkcs8",
+ "signature 2.1.0",
+]
+
+[[package]]
+name = "ed25519-consensus"
+version = "2.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3c8465edc8ee7436ffea81d21a019b16676ee3db267aa8d5a8d729581ecf998b"
+dependencies = [
+ "curve25519-dalek-ng",
+ "hex",
+ "rand_core 0.6.4",
+ "sha2 0.9.9",
+ "zeroize",
 ]
 
 [[package]]
@@ -393,7 +464,9 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c762bae6dcaf24c4c84667b8579785430908723d5c889f469d76a41d59cc7a9d"
 dependencies = [
  "curve25519-dalek",
- "ed25519",
+ "ed25519 1.5.3",
+ "rand 0.7.3",
+ "serde",
  "sha2 0.9.9",
  "zeroize",
 ]
@@ -407,7 +480,7 @@ checksum = "7fcaabb2fef8c910e7f4c7ce9f67a1283a1715879a7c230ca9d6d1ae31f16d91"
 [[package]]
 name = "election"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=5e43c3ee9b5785abdca33b21c86fd38dbd9285e0#5e43c3ee9b5785abdca33b21c86fd38dbd9285e0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d#c90484449c0d6497fa5d845e38023845393411d1"
 dependencies = [
  "anyhow",
  "borsh",
@@ -473,7 +546,7 @@ dependencies = [
 [[package]]
 name = "first-read-last-write-cache"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=5e43c3ee9b5785abdca33b21c86fd38dbd9285e0#5e43c3ee9b5785abdca33b21c86fd38dbd9285e0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d#c90484449c0d6497fa5d845e38023845393411d1"
 dependencies = [
  "thiserror",
 ]
@@ -613,13 +686,24 @@ dependencies = [
 
 [[package]]
 name = "getrandom"
+version = "0.1.16"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8fc3cb4d91f53b50155bdcfd23f6a4c39ae1969c2ae85982b135750cccaf5fce"
+dependencies = [
+ "cfg-if",
+ "libc",
+ "wasi 0.9.0+wasi-snapshot-preview1",
+]
+
+[[package]]
+name = "getrandom"
 version = "0.2.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c05aeb6a22b8f62540c194aac980f2115af067bfe15a0734d7277a768d396b31"
 dependencies = [
  "cfg-if",
  "libc",
- "wasi",
+ "wasi 0.11.0+wasi-snapshot-preview1",
 ]
 
 [[package]]
@@ -671,9 +755,6 @@ name = "hashbrown"
 version = "0.12.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8a9ee70c43aaf417c914396645a0fa852624801b24ebb7ae78fe8272889ac888"
-dependencies = [
- "ahash 0.7.6",
-]
 
 [[package]]
 name = "hashbrown"
@@ -681,7 +762,7 @@ version = "0.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "43a3c133739dddd0d2990f9a4bdf8eb4b21ef50e4851ca85ab661199821d510e"
 dependencies = [
- "ahash 0.8.3",
+ "ahash",
 ]
 
 [[package]]
@@ -940,7 +1021,7 @@ dependencies = [
  "hyper",
  "jsonrpsee-types",
  "parking_lot",
- "rand",
+ "rand 0.8.5",
  "rustc-hash",
  "serde",
  "serde_json",
@@ -1021,7 +1102,7 @@ dependencies = [
 [[package]]
 name = "jupiter"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/Jupiter.git?rev=0609c8ab69bffa1bbb1acc90dcad2f541d58a5e9#0609c8ab69bffa1bbb1acc90dcad2f541d58a5e9"
+source = "git+https://github.com/Sovereign-Labs/Jupiter.git?rev=bbd0a9f67dece567e14f5184e303145dd3c379ad#bbd0a9f67dece567e14f5184e303145dd3c379ad"
 dependencies = [
  "anyhow",
  "base64 0.13.1",
@@ -1039,9 +1120,9 @@ dependencies = [
  "serde_json",
  "sovereign-sdk",
  "tendermint",
+ "tendermint-proto",
  "tokio",
  "tracing",
- "tracing-subscriber",
 ]
 
 [[package]]
@@ -1149,7 +1230,7 @@ checksum = "5b9d9a46eff5b4ff64b45a9e316a6d1e0bc719ef429cbec4dc630684212bfdf9"
 dependencies = [
  "libc",
  "log",
- "wasi",
+ "wasi 0.11.0+wasi-snapshot-preview1",
  "windows-sys 0.45.0",
 ]
 
@@ -1186,7 +1267,7 @@ dependencies = [
 [[package]]
 name = "nmt-rs"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/nmt-rs.git?rev=36bffad64cf257264069e3b04679d945d0a0af36#36bffad64cf257264069e3b04679d945d0a0af36"
+source = "git+https://github.com/Sovereign-Labs/nmt-rs.git?rev=dd37588444fca72825d11fe4a46838f66525c49f#dd37588444fca72825d11fe4a46838f66525c49f"
 dependencies = [
  "borsh",
  "bytes",
@@ -1371,6 +1452,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
 
 [[package]]
+name = "pkcs8"
+version = "0.10.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f950b2377845cebe5cf8b5165cb3cc1a5e0fa5cfa3e1f7f55707d8fd82e0a7b7"
+dependencies = [
+ "der",
+ "spki",
+]
+
+[[package]]
 name = "pkg-config"
 version = "0.3.26"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1499,13 +1590,36 @@ dependencies = [
 
 [[package]]
 name = "rand"
+version = "0.7.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6a6b1679d49b24bbfe0c803429aa1874472f50d9b363131f0e89fc356b544d03"
+dependencies = [
+ "getrandom 0.1.16",
+ "libc",
+ "rand_chacha 0.2.2",
+ "rand_core 0.5.1",
+ "rand_hc",
+]
+
+[[package]]
+name = "rand"
 version = "0.8.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "34af8d1a0e25924bc5b7c43c079c942339d8f0a8b57c39049bef581b46327404"
 dependencies = [
  "libc",
- "rand_chacha",
+ "rand_chacha 0.3.1",
  "rand_core 0.6.4",
+]
+
+[[package]]
+name = "rand_chacha"
+version = "0.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f4c8ed856279c9737206bf725bf36935d8666ead7aa69b52be55af369d193402"
+dependencies = [
+ "ppv-lite86",
+ "rand_core 0.5.1",
 ]
 
 [[package]]
@@ -1523,6 +1637,9 @@ name = "rand_core"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "90bde5296fc891b0cef12a6d03ddccc162ce7b2aff54160af9338f8d40df6d19"
+dependencies = [
+ "getrandom 0.1.16",
+]
 
 [[package]]
 name = "rand_core"
@@ -1530,7 +1647,16 @@ version = "0.6.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ec0be4795e2f6a28069bec0b5ff3e2ac9bafc99e6a9a7dc3547996c5c816922c"
 dependencies = [
- "getrandom",
+ "getrandom 0.2.8",
+]
+
+[[package]]
+name = "rand_hc"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ca3129af7b92a17112d59ad498c6f81eaf463253766b90396d39ea7a39d6613c"
+dependencies = [
+ "rand_core 0.5.1",
 ]
 
 [[package]]
@@ -1701,14 +1827,14 @@ dependencies = [
 [[package]]
 name = "schemadb"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=5e43c3ee9b5785abdca33b21c86fd38dbd9285e0#5e43c3ee9b5785abdca33b21c86fd38dbd9285e0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d#c90484449c0d6497fa5d845e38023845393411d1"
 dependencies = [
  "anyhow",
  "byteorder",
  "hex",
  "once_cell",
  "prometheus",
- "rand",
+ "rand 0.8.5",
  "rocksdb",
  "sovereign-sdk",
  "tracing",
@@ -1758,6 +1884,24 @@ name = "semver"
 version = "1.0.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bebd363326d05ec3e2f532ab7660680f3b02130d780c299bca73469d521bc0ed"
+
+[[package]]
+name = "sequencer"
+version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d#c90484449c0d6497fa5d845e38023845393411d1"
+dependencies = [
+ "anyhow",
+ "bank",
+ "borsh",
+ "hex",
+ "serde",
+ "serde_json",
+ "sov-modules-api",
+ "sov-modules-macros",
+ "sov-state",
+ "sovereign-sdk",
+ "thiserror",
+]
 
 [[package]]
 name = "serde"
@@ -1900,6 +2044,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "74233d3b3b2f6d4b006dc19dee745e73e2a6bfb6f93607cd3b02bd5b00797d7c"
 
 [[package]]
+name = "signature"
+version = "2.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5e1788eed21689f9cf370582dfc467ef36ed9c707f073528ddafa8d83e3b8500"
+
+[[package]]
 name = "slab"
 version = "0.4.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1936,43 +2086,40 @@ dependencies = [
  "http",
  "httparse",
  "log",
- "rand",
+ "rand 0.8.5",
  "sha-1",
 ]
 
 [[package]]
 name = "sov-app-template"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=5e43c3ee9b5785abdca33b21c86fd38dbd9285e0#5e43c3ee9b5785abdca33b21c86fd38dbd9285e0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d#c90484449c0d6497fa5d845e38023845393411d1"
 dependencies = [
  "anyhow",
  "borsh",
+ "serde",
  "sov-modules-api",
  "sov-state",
- "sovereign-db",
  "sovereign-sdk",
+ "tracing",
 ]
 
 [[package]]
 name = "sov-demo"
 version = "0.1.0"
 dependencies = [
- "accounts",
  "anyhow",
- "bank",
  "borsh",
- "election",
+ "demo-app",
+ "hex",
  "jsonrpsee",
  "jupiter",
  "serde",
  "serde_json",
  "sha2 0.10.6",
- "sov-app-template",
  "sov-modules-api",
- "sov-modules-macros",
- "sov-state",
- "sovereign-db",
  "sovereign-sdk",
+ "tendermint",
  "tokio",
  "tracing",
  "tracing-subscriber",
@@ -1981,13 +2128,15 @@ dependencies = [
 [[package]]
 name = "sov-modules-api"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=5e43c3ee9b5785abdca33b21c86fd38dbd9285e0#5e43c3ee9b5785abdca33b21c86fd38dbd9285e0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d#c90484449c0d6497fa5d845e38023845393411d1"
 dependencies = [
  "anyhow",
  "bech32",
  "borsh",
  "derive_more",
+ "ed25519-dalek",
  "jmt",
+ "rand 0.7.3",
  "serde",
  "sha2 0.10.6",
  "sov-state",
@@ -1998,7 +2147,7 @@ dependencies = [
 [[package]]
 name = "sov-modules-macros"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=5e43c3ee9b5785abdca33b21c86fd38dbd9285e0#5e43c3ee9b5785abdca33b21c86fd38dbd9285e0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d#c90484449c0d6497fa5d845e38023845393411d1"
 dependencies = [
  "anyhow",
  "borsh",
@@ -2012,13 +2161,14 @@ dependencies = [
 [[package]]
 name = "sov-state"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=5e43c3ee9b5785abdca33b21c86fd38dbd9285e0#5e43c3ee9b5785abdca33b21c86fd38dbd9285e0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d#c90484449c0d6497fa5d845e38023845393411d1"
 dependencies = [
  "anyhow",
  "borsh",
  "first-read-last-write-cache",
  "hex",
  "jmt",
+ "serde",
  "sha2 0.10.6",
  "sovereign-db",
  "sovereign-sdk",
@@ -2028,7 +2178,7 @@ dependencies = [
 [[package]]
 name = "sovereign-db"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=5e43c3ee9b5785abdca33b21c86fd38dbd9285e0#5e43c3ee9b5785abdca33b21c86fd38dbd9285e0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d#c90484449c0d6497fa5d845e38023845393411d1"
 dependencies = [
  "anyhow",
  "borsh",
@@ -2043,12 +2193,11 @@ dependencies = [
 [[package]]
 name = "sovereign-sdk"
 version = "0.1.0"
-source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=5e43c3ee9b5785abdca33b21c86fd38dbd9285e0#5e43c3ee9b5785abdca33b21c86fd38dbd9285e0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d#c90484449c0d6497fa5d845e38023845393411d1"
 dependencies = [
  "anyhow",
  "borsh",
  "bytes",
- "first-read-last-write-cache",
  "jmt",
  "serde",
  "sha2 0.10.6",
@@ -2060,6 +2209,16 @@ name = "spin"
 version = "0.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6e63cff320ae2c57904679ba7cb63280a3dc4613885beafb148ee7bf9aa9042d"
+
+[[package]]
+name = "spki"
+version = "0.7.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9d1e996ef02c474957d681f1b05213dfb0abab947b446a62d37770b23500184a"
+dependencies = [
+ "base64ct",
+ "der",
+]
 
 [[package]]
 name = "subtle"
@@ -2075,6 +2234,12 @@ checksum = "7dcb1ed7b8330c5eed5441052651dd7a12c75e2ed88f2ec024ae1fa3a5e59945"
 dependencies = [
  "zeroize",
 ]
+
+[[package]]
+name = "subtle-ng"
+version = "2.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "734676eb262c623cec13c3155096e08d1f8f29adce39ba17948b18dad1e54142"
 
 [[package]]
 name = "syn"
@@ -2113,13 +2278,14 @@ dependencies = [
 
 [[package]]
 name = "tendermint"
-version = "0.27.0"
+version = "0.32.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "eeb6f9c129bc9f1a3c38bc91c63a5e8d3c00ed998e7fa4ca44e06467466d0e77"
+checksum = "a46ec6b25b028097ab682ffae11d09d64fe1e2535833b902f26a278a0f88a705"
 dependencies = [
  "bytes",
- "ed25519",
- "ed25519-dalek",
+ "digest 0.10.6",
+ "ed25519 2.2.1",
+ "ed25519-consensus",
  "flex-error",
  "futures",
  "num-traits",
@@ -2130,8 +2296,8 @@ dependencies = [
  "serde_bytes",
  "serde_json",
  "serde_repr",
- "sha2 0.9.9",
- "signature",
+ "sha2 0.10.6",
+ "signature 2.1.0",
  "subtle",
  "subtle-encoding",
  "tendermint-proto",
@@ -2141,9 +2307,9 @@ dependencies = [
 
 [[package]]
 name = "tendermint-proto"
-version = "0.27.0"
+version = "0.32.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d5895470f28c530f8ae8c4071bf8190304ce00bd131d25e81730453124a3375c"
+checksum = "6ce23c8ff0e6634eb4c3c4aeed45076dc97dac91aac5501a905a67fa222e165b"
 dependencies = [
  "bytes",
  "flex-error",
@@ -2470,6 +2636,22 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "830b7e5d4d90034032940e4ace0d9a9a057e7a45cd94e6c007832e39edb82f6d"
 
 [[package]]
+name = "value-setter"
+version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d#c90484449c0d6497fa5d845e38023845393411d1"
+dependencies = [
+ "anyhow",
+ "borsh",
+ "serde",
+ "serde_json",
+ "sov-modules-api",
+ "sov-modules-macros",
+ "sov-state",
+ "sovereign-sdk",
+ "thiserror",
+]
+
+[[package]]
 name = "vcpkg"
 version = "0.2.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2490,6 +2672,12 @@ dependencies = [
  "log",
  "try-lock",
 ]
+
+[[package]]
+name = "wasi"
+version = "0.9.0+wasi-snapshot-preview1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cccddf32554fecc6acb585f82a32a72e28b48f8c4c1883ddfeeeaa96f7d8e519"
 
 [[package]]
 name = "wasi"
@@ -2726,9 +2914,9 @@ dependencies = [
 
 [[package]]
 name = "zeroize"
-version = "1.3.0"
+version = "1.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4756f7db3f7b5574938c3eb1c117038b8e07f95ee6718c0efad4ac21508f1efd"
+checksum = "2a0956f1ba7c7909bfb66c2e9e4124ab6f6482560f6628b5aaeba39207c9aad9"
 dependencies = [
  "zeroize_derive",
 ]
