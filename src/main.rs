@@ -5,13 +5,11 @@ use jupiter::types::NamespaceId;
 use jupiter::verifier::RollupParams;
 use sovereign_sdk::services::da::DaService;
 use sovereign_sdk::stf::{StateTransitionFunction, StateTransitionRunner};
-use sov_modules_api::{
-    default_context::DefaultContext, default_signature::private_key::DefaultPrivateKey, Address,
-};
+use sov_modules_api::default_signature::private_key::DefaultPrivateKey;
 use tracing::Level;
 
 
-const CELESTIA_NODE_AUTH_TOKEN: &'static str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBbGxvdyI6WyJwdWJsaWMiLCJyZWFkIiwid3JpdGUiLCJhZG1pbiJdfQ.rr8JrAV2D-7bYMqCwxia7xjpdDbVvVJomMKRA1h-_Ac";
+const CELESTIA_NODE_AUTH_TOKEN: &'static str = "";
 
 // I sent 8 demo election transactions at height 293686, generated using the demo app data generator
 const HEIGHT_OF_FIRST_TXS: u64 = 293686;
@@ -40,10 +38,10 @@ async fn main() -> Result<(), anyhow::Error> {
     let value_setter_admin_private_key = DefaultPrivateKey::generate();
     let election_admin_private_key = DefaultPrivateKey::generate();
 
-    let initial_balannce = 100000000;
+    let initial_balance = 100000000;
 
     let genesis_config = create_demo_config(
-        initial_balannce,
+        initial_balance,
         &value_setter_admin_private_key,
         &election_admin_private_key,
     );
@@ -66,6 +64,15 @@ async fn main() -> Result<(), anyhow::Error> {
     for height in START_HEIGHT.. {
         println!("Requesting data for height {} and prev_state_root 0x{}", height, hex::encode(&prev_state_root));
         let filtered_block = da_service.get_finalized_at(height).await?;
+        let (blob_txs, _inclusion_proof, _completeness_proof) =
+            da_service.extract_relevant_txs_with_proof(filtered_block);
+
+        demo.begin_slot(Default::default());
+        for blob in blob_txs.clone() {
+            demo.apply_blob(blob, None);
+        }
+        let (next_state_root, _witness, _) = demo.end_slot();
+        prev_state_root = next_state_root.0;
     }
 
     // let cel_service = default_celestia_service();
