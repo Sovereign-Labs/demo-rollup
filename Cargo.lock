@@ -15,7 +15,7 @@ dependencies = [
  "sov-modules-api",
  "sov-modules-macros",
  "sov-state",
- "sovereign-sdk",
+ "sovereign-sdk 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
  "thiserror",
 ]
 
@@ -82,7 +82,7 @@ dependencies = [
  "sov-modules-api",
  "sov-modules-macros",
  "sov-state",
- "sovereign-sdk",
+ "sovereign-sdk 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
  "thiserror",
 ]
 
@@ -369,7 +369,7 @@ dependencies = [
  "bank",
  "borsh",
  "election",
- "schemadb",
+ "schemadb 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
  "sequencer",
  "serde",
  "serde_json",
@@ -378,8 +378,8 @@ dependencies = [
  "sov-modules-api",
  "sov-modules-macros",
  "sov-state",
- "sovereign-db",
- "sovereign-sdk",
+ "sovereign-db 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
+ "sovereign-sdk 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
  "value-setter",
 ]
 
@@ -490,7 +490,7 @@ dependencies = [
  "sov-modules-api",
  "sov-modules-macros",
  "sov-state",
- "sovereign-sdk",
+ "sovereign-sdk 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
  "thiserror",
 ]
 
@@ -1118,7 +1118,7 @@ dependencies = [
  "serde",
  "serde_cbor",
  "serde_json",
- "sovereign-sdk",
+ "sovereign-sdk 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
  "tendermint",
  "tendermint-proto",
  "tokio",
@@ -1836,7 +1836,23 @@ dependencies = [
  "prometheus",
  "rand 0.8.5",
  "rocksdb",
- "sovereign-sdk",
+ "sovereign-sdk 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
+ "tracing",
+]
+
+[[package]]
+name = "schemadb"
+version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d1#c90484449c0d6497fa5d845e38023845393411d1"
+dependencies = [
+ "anyhow",
+ "byteorder",
+ "hex",
+ "once_cell",
+ "prometheus",
+ "rand 0.8.5",
+ "rocksdb",
+ "sovereign-sdk 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d1)",
  "tracing",
 ]
 
@@ -1899,7 +1915,7 @@ dependencies = [
  "sov-modules-api",
  "sov-modules-macros",
  "sov-state",
- "sovereign-sdk",
+ "sovereign-sdk 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
  "thiserror",
 ]
 
@@ -2100,7 +2116,7 @@ dependencies = [
  "serde",
  "sov-modules-api",
  "sov-state",
- "sovereign-sdk",
+ "sovereign-sdk 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
  "tracing",
 ]
 
@@ -2117,8 +2133,10 @@ dependencies = [
  "serde",
  "serde_json",
  "sha2 0.10.6",
+ "sov-app-template",
  "sov-modules-api",
- "sovereign-sdk",
+ "sovereign-db 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d1)",
+ "sovereign-sdk 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
  "tendermint",
  "tokio",
  "tracing",
@@ -2140,7 +2158,7 @@ dependencies = [
  "serde",
  "sha2 0.10.6",
  "sov-state",
- "sovereign-sdk",
+ "sovereign-sdk 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
  "thiserror",
 ]
 
@@ -2154,7 +2172,7 @@ dependencies = [
  "proc-macro2",
  "quote",
  "sov-modules-api",
- "sovereign-sdk",
+ "sovereign-sdk 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
  "syn 1.0.109",
 ]
 
@@ -2170,8 +2188,8 @@ dependencies = [
  "jmt",
  "serde",
  "sha2 0.10.6",
- "sovereign-db",
- "sovereign-sdk",
+ "sovereign-db 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
+ "sovereign-sdk 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
  "thiserror",
 ]
 
@@ -2185,15 +2203,44 @@ dependencies = [
  "byteorder",
  "jmt",
  "rocksdb",
- "schemadb",
+ "schemadb 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
  "serde",
- "sovereign-sdk",
+ "sovereign-sdk 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
+]
+
+[[package]]
+name = "sovereign-db"
+version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d1#c90484449c0d6497fa5d845e38023845393411d1"
+dependencies = [
+ "anyhow",
+ "borsh",
+ "byteorder",
+ "jmt",
+ "rocksdb",
+ "schemadb 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d1)",
+ "serde",
+ "sovereign-sdk 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d1)",
 ]
 
 [[package]]
 name = "sovereign-sdk"
 version = "0.1.0"
 source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d#c90484449c0d6497fa5d845e38023845393411d1"
+dependencies = [
+ "anyhow",
+ "borsh",
+ "bytes",
+ "jmt",
+ "serde",
+ "sha2 0.10.6",
+ "thiserror",
+]
+
+[[package]]
+name = "sovereign-sdk"
+version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d1#c90484449c0d6497fa5d845e38023845393411d1"
 dependencies = [
  "anyhow",
  "borsh",
@@ -2647,7 +2694,7 @@ dependencies = [
  "sov-modules-api",
  "sov-modules-macros",
  "sov-state",
- "sovereign-sdk",
+ "sovereign-sdk 0.1.0 (git+https://github.com/Sovereign-Labs/sovereign.git?rev=c90484449c0d6497fa5d845e38023845393411d)",
  "thiserror",
 ]
 
