@@ -71,7 +71,7 @@ async fn main() -> Result<(), anyhow::Error> {
 
 
     let mut item_numbers = ledger_db.get_next_items_numbers();
-    if item_numbers.slot_number == 1 {
+    if item_numbers.slot_number > 1 {
         print!("No history detected. Initializing chain...");
         demo.init_chain(genesis_config);
         println!("Done.");
