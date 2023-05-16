@@ -22,6 +22,6 @@ tendermint = "0.32"
 jupiter = { git = "https://github.com/Sovereign-Labs/Jupiter.git", rev = "bbd0a9f67dece567e14f5184e303145dd3c379ad" }
 demo-app = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "c90484449c0d6497fa5d845e38023845393411d" }
 sov-modules-api = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "c90484449c0d6497fa5d845e38023845393411d" }
+sov-app-template = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "c90484449c0d6497fa5d845e38023845393411d" }
 sovereign-sdk = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "c90484449c0d6497fa5d845e38023845393411d" }
-
-#sovereign-db = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "c90484449c0d6497fa5d845e38023845393411d1" }
+sovereign-db = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "c90484449c0d6497fa5d845e38023845393411d" }
