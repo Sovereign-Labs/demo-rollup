@@ -42,7 +42,7 @@ async fn main() -> Result<(), anyhow::Error> {
     let celestia_rpc_auth_token = if !CELESTIA_NODE_AUTH_TOKEN.is_empty() {
         CELESTIA_NODE_AUTH_TOKEN.to_string()
     } else {
-        std::env::var("CELESTIA_NODE_AUTH_TOKEN").expect("CELESTIA_NODE_AUTH_TOKEN")
+        std::env::var("CELESTIA_NODE_AUTH_TOKEN").expect("please set CELESTIA_NODE_AUTH_TOKEN environment variable")
     };
     let da_service = CelestiaService::new(
         DaServiceConfig {
@@ -138,7 +138,7 @@ async fn main() -> Result<(), anyhow::Error> {
                             hash: tx_receipt.tx_hash,
                             events: EventNumber(start_event_number)..EventNumber(end_event_number),
                             data: DbBytes::new(tx_receipt.body_to_save.unwrap_or_default()),
-                            // TODO: Where to get status?
+                            // TODO: Should be removed (Nikolai add issue)
                             status: Status::Applied,
                         }
                     }));

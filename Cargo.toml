@@ -24,4 +24,4 @@ demo-app = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "c90
 sov-modules-api = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "c90484449c0d6497fa5d845e38023845393411d" }
 sov-app-template = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "c90484449c0d6497fa5d845e38023845393411d" }
 sovereign-sdk = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "c90484449c0d6497fa5d845e38023845393411d" }
-sovereign-db = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "c90484449c0d6497fa5d845e38023845393411d1" }
+sovereign-db = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "c90484449c0d6497fa5d845e38023845393411d" }
