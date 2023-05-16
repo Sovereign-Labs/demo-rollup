@@ -1,10 +1,11 @@
 use demo_app::app::create_demo_config;
-use demo_app::app::NativeAppRunner;
+use demo_app::app::{DefaultPrivateKey, NativeAppRunner};
 use jupiter::da_service::{CelestiaService, DaServiceConfig};
 use jupiter::types::NamespaceId;
 use jupiter::verifier::CelestiaVerifier;
 use jupiter::verifier::RollupParams;
-use sov_modules_api::default_signature::private_key::DefaultPrivateKey;
+use risc0_adapter::host::Risc0Host;
+use sovereign_db::ledger_db::LedgerDB;
 use sovereign_sdk::da::DaVerifier;
 use sovereign_sdk::services::da::DaService;
 use sovereign_sdk::stf::{StateTransitionFunction, StateTransitionRunner};
@@ -18,6 +19,11 @@ const START_HEIGHT: u64 = HEIGHT_OF_FIRST_TXS - 1;
 const DATA_DIR_LOCATION: &'static str = "demo_data";
 const ROLLUP_NAMESPACE: NamespaceId = NamespaceId([115, 111, 118, 45, 116, 101, 115, 116]);
 
+pub fn intialize_ledger() -> LedgerDB {
+    let ledger_db = LedgerDB::with_path(DATA_DIR_LOCATION).expect("Ledger DB failed to open");
+    ledger_db
+}
+
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
     // Initializing logging
@@ -28,8 +34,10 @@ async fn main() -> Result<(), anyhow::Error> {
         .map_err(|_err| eprintln!("Unable to set global default subscriber"))
         .expect("Cannot fail to set subscriber");
 
+    let ledger_db = intialize_ledger();
+
     // Initialize the Celestia service
-    let mut demo_runner = NativeAppRunner::new(DATA_DIR_LOCATION);
+    let mut demo_runner = NativeAppRunner::<Risc0Host>::new(DATA_DIR_LOCATION);
     let da_service = CelestiaService::new(
         DaServiceConfig {
             celestia_rpc_auth_token: CELESTIA_NODE_AUTH_TOKEN.to_string(),
@@ -74,7 +82,10 @@ async fn main() -> Result<(), anyhow::Error> {
 
         demo.begin_slot(Default::default());
         for blob in blob_txs.clone() {
-            demo.apply_blob(blob, None);
+            let receipts = demo.apply_blob(blob, None);
+            for receipt in receipts {
+                l
+            }
         }
         let (next_state_root, _witness, _) = demo.end_slot();
         prev_state_root = next_state_root.0;
