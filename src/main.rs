@@ -1,6 +1,10 @@
-use demo_app::app::create_demo_genesis_config;
+mod config;
+
+use crate::config::RollupConfig;
+use demo_app::app::create_demo_config;
 use demo_app::app::{DefaultPrivateKey, NativeAppRunner};
-use jupiter::da_service::{CelestiaService, DaServiceConfig};
+use demo_app::config::from_toml_path;
+use jupiter::da_service::CelestiaService;
 use jupiter::types::NamespaceId;
 use jupiter::verifier::CelestiaVerifier;
 use jupiter::verifier::RollupParams;
@@ -11,21 +15,19 @@ use sovereign_sdk::services::da::DaService;
 use sovereign_sdk::stf::{StateTransitionFunction, StateTransitionRunner};
 use tracing::Level;
 
-const CELESTIA_NODE_AUTH_TOKEN: &'static str = "";
-
 // I sent 8 demo election transactions at height 293686, generated using the demo app data generator
-const HEIGHT_OF_FIRST_TXS: u64 = 293686;
-const START_HEIGHT: u64 = HEIGHT_OF_FIRST_TXS - 1;
-const DATA_DIR_LOCATION: &'static str = "demo_data";
+const DATA_DIR_LOCATION: &str = "demo_data";
 const ROLLUP_NAMESPACE: NamespaceId = NamespaceId([115, 111, 118, 45, 116, 101, 115, 116]);
 
-pub fn intialize_ledger() -> LedgerDB {
+pub fn initialize_ledger() -> LedgerDB {
     let ledger_db = LedgerDB::with_path(DATA_DIR_LOCATION).expect("Ledger DB failed to open");
     ledger_db
 }
 
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
+    let rollup_config: RollupConfig = from_toml_path("rollup_config.toml")?;
+
     // Initializing logging
     let subscriber = tracing_subscriber::fmt()
         .with_max_level(Level::WARN)
@@ -34,22 +36,12 @@ async fn main() -> Result<(), anyhow::Error> {
         .map_err(|_err| eprintln!("Unable to set global default subscriber"))
         .expect("Cannot fail to set subscriber");
 
-    let ledger_db = intialize_ledger();
+    let ledger_db = initialize_ledger();
 
     // Initialize the Celestia service
-    let mut demo_runner = NativeAppRunner::<Risc0Host>::new(DATA_DIR_LOCATION);
-    let celestia_rpc_auth_token = if !CELESTIA_NODE_AUTH_TOKEN.is_empty() {
-        CELESTIA_NODE_AUTH_TOKEN.to_string()
-    } else {
-        std::env::var("CELESTIA_NODE_AUTH_TOKEN")
-            .expect("please set CELESTIA_NODE_AUTH_TOKEN environment variable")
-    };
+    let mut demo_runner = NativeAppRunner::<Risc0Host>::new(rollup_config.runner.clone());
     let da_service = CelestiaService::new(
-        DaServiceConfig {
-            celestia_rpc_auth_token,
-            celestia_rpc_address: "http://localhost:11111/".into(),
-            max_celestia_response_body_size: 1024 * 1024 * 100,
-        },
+        rollup_config.da.clone(),
         RollupParams {
             namespace: ROLLUP_NAMESPACE,
         },
@@ -61,17 +53,8 @@ async fn main() -> Result<(), anyhow::Error> {
     // Initialize the demo app
     let demo = demo_runner.inner_mut();
     let sequencer_private_key = DefaultPrivateKey::generate();
-    let genesis_config = create_demo_genesis_config(
-        100000000,
-        sequencer_private_key.default_address::<sha2::Sha256>(),
-        vec![
-            99, 101, 108, 101, 115, 116, 105, 97, 49, 122, 102, 118, 114, 114, 102, 97, 113, 57,
-            117, 100, 54, 103, 57, 116, 52, 107, 122, 109, 115, 108, 112, 102, 50, 52, 121, 115,
-            97, 120, 113, 102, 110, 122, 101, 101, 53, 119, 57,
-        ],
-        &sequencer_private_key,
-        &sequencer_private_key,
-    );
+    let genesis_config =
+        create_demo_config(100000000, &sequencer_private_key, &sequencer_private_key);
 
     let item_numbers = ledger_db.get_next_items_numbers();
     let last_slot_processed_before_shutdown = item_numbers.slot_number - 1;
@@ -87,7 +70,7 @@ async fn main() -> Result<(), anyhow::Error> {
     let (prev_state_root, _, _) = demo.end_slot();
     let mut prev_state_root = prev_state_root.0;
 
-    let start_height = START_HEIGHT + last_slot_processed_before_shutdown;
+    let start_height = rollup_config.start_height + last_slot_processed_before_shutdown;
     // Request data from the DA layer and apply it to the demo app
     for height in start_height..start_height + 10 {
         println!(
