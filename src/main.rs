@@ -1,7 +1,7 @@
 mod config;
 
 use crate::config::RollupConfig;
-use demo_app::app::create_demo_config;
+use demo_app::app::create_demo_genesis_config;
 use demo_app::app::{DefaultPrivateKey, NativeAppRunner};
 use demo_app::config::from_toml_path;
 use jupiter::da_service::CelestiaService;
@@ -53,8 +53,17 @@ async fn main() -> Result<(), anyhow::Error> {
     // Initialize the demo app
     let demo = demo_runner.inner_mut();
     let sequencer_private_key = DefaultPrivateKey::generate();
-    let genesis_config =
-        create_demo_config(100000000, &sequencer_private_key, &sequencer_private_key);
+    let genesis_config = create_demo_genesis_config(
+        100000000,
+        sequencer_private_key.default_address(),
+        vec![
+            99, 101, 108, 101, 115, 116, 105, 97, 49, 122, 102, 118, 114, 114, 102, 97, 113, 57,
+            117, 100, 54, 103, 57, 116, 52, 107, 122, 109, 115, 108, 112, 102, 50, 52, 121, 115,
+            97, 120, 113, 102, 110, 122, 101, 101, 53, 119, 57,
+        ],
+        &sequencer_private_key,
+        &sequencer_private_key,
+    );
 
     let item_numbers = ledger_db.get_next_items_numbers();
     let last_slot_processed_before_shutdown = item_numbers.slot_number - 1;
