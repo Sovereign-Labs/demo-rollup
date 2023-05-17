@@ -5,6 +5,7 @@ version = 3
 [[package]]
 name = "accounts"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=04d1591b4568cdfbebaa05eeee020c811080a9af#04d1591b4568cdfbebaa05eeee020c811080a9af"
 dependencies = [
  "anyhow",
  "borsh",
@@ -79,6 +80,7 @@ checksum = "d468802bab17cbc0cc575e9b053f41e72aa36bfa6b7f55e3529ffa43161b97fa"
 [[package]]
 name = "bank"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=04d1591b4568cdfbebaa05eeee020c811080a9af#04d1591b4568cdfbebaa05eeee020c811080a9af"
 dependencies = [
  "anyhow",
  "borsh",
@@ -450,6 +452,7 @@ dependencies = [
 [[package]]
 name = "demo-app"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=04d1591b4568cdfbebaa05eeee020c811080a9af#04d1591b4568cdfbebaa05eeee020c811080a9af"
 dependencies = [
  "accounts",
  "anyhow",
@@ -596,6 +599,7 @@ checksum = "7fcaabb2fef8c910e7f4c7ce9f67a1283a1715879a7c230ca9d6d1ae31f16d91"
 [[package]]
 name = "election"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=04d1591b4568cdfbebaa05eeee020c811080a9af#04d1591b4568cdfbebaa05eeee020c811080a9af"
 dependencies = [
  "anyhow",
  "borsh",
@@ -667,6 +671,7 @@ dependencies = [
 [[package]]
 name = "first-read-last-write-cache"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=04d1591b4568cdfbebaa05eeee020c811080a9af#04d1591b4568cdfbebaa05eeee020c811080a9af"
 dependencies = [
  "thiserror",
 ]
@@ -1233,6 +1238,7 @@ dependencies = [
 [[package]]
 name = "jupiter"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/Jupiter.git?rev=33fba8c86640414f0b31022918dd7e7839fb8e64#33fba8c86640414f0b31022918dd7e7839fb8e64"
 dependencies = [
  "anyhow",
  "base64 0.13.1",
@@ -1998,6 +2004,7 @@ dependencies = [
 [[package]]
 name = "risc0-adapter"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=04d1591b4568cdfbebaa05eeee020c811080a9af#04d1591b4568cdfbebaa05eeee020c811080a9af"
 dependencies = [
  "anyhow",
  "bincode",
@@ -2263,6 +2270,7 @@ dependencies = [
 [[package]]
 name = "schemadb"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=04d1591b4568cdfbebaa05eeee020c811080a9af#04d1591b4568cdfbebaa05eeee020c811080a9af"
 dependencies = [
  "anyhow",
  "byteorder",
@@ -2323,6 +2331,7 @@ checksum = "bebd363326d05ec3e2f532ab7660680f3b02130d780c299bca73469d521bc0ed"
 [[package]]
 name = "sequencer"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=04d1591b4568cdfbebaa05eeee020c811080a9af#04d1591b4568cdfbebaa05eeee020c811080a9af"
 dependencies = [
  "anyhow",
  "bank",
@@ -2536,6 +2545,7 @@ dependencies = [
 [[package]]
 name = "sov-app-template"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=04d1591b4568cdfbebaa05eeee020c811080a9af#04d1591b4568cdfbebaa05eeee020c811080a9af"
 dependencies = [
  "anyhow",
  "borsh",
@@ -2572,6 +2582,7 @@ dependencies = [
 [[package]]
 name = "sov-modules-api"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=04d1591b4568cdfbebaa05eeee020c811080a9af#04d1591b4568cdfbebaa05eeee020c811080a9af"
 dependencies = [
  "anyhow",
  "bech32",
@@ -2590,6 +2601,7 @@ dependencies = [
 [[package]]
 name = "sov-modules-macros"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=04d1591b4568cdfbebaa05eeee020c811080a9af#04d1591b4568cdfbebaa05eeee020c811080a9af"
 dependencies = [
  "anyhow",
  "borsh",
@@ -2603,6 +2615,7 @@ dependencies = [
 [[package]]
 name = "sov-state"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=04d1591b4568cdfbebaa05eeee020c811080a9af#04d1591b4568cdfbebaa05eeee020c811080a9af"
 dependencies = [
  "anyhow",
  "borsh",
@@ -2618,8 +2631,10 @@ dependencies = [
 [[package]]
 name = "sovereign-db"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=04d1591b4568cdfbebaa05eeee020c811080a9af#04d1591b4568cdfbebaa05eeee020c811080a9af"
 dependencies = [
  "anyhow",
+ "bincode",
  "borsh",
  "byteorder",
  "jmt",
@@ -2632,6 +2647,7 @@ dependencies = [
 [[package]]
 name = "sovereign-sdk"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=04d1591b4568cdfbebaa05eeee020c811080a9af#04d1591b4568cdfbebaa05eeee020c811080a9af"
 dependencies = [
  "anyhow",
  "borsh",
@@ -3093,6 +3109,7 @@ checksum = "830b7e5d4d90034032940e4ace0d9a9a057e7a45cd94e6c007832e39edb82f6d"
 [[package]]
 name = "value-setter"
 version = "0.1.0"
+source = "git+https://github.com/Sovereign-Labs/sovereign.git?rev=04d1591b4568cdfbebaa05eeee020c811080a9af#04d1591b4568cdfbebaa05eeee020c811080a9af"
 dependencies = [
  "anyhow",
  "borsh",

@@ -19,22 +19,11 @@ tracing-subscriber = "0.3.16"
 hex = "0.4.3"
 tendermint = "0.32"
 
-jupiter = { git = "https://github.com/Sovereign-Labs/Jupiter.git", rev = "678ba2400cf32b9c3bc51584a13db362d897c2bc" }
-demo-app = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "7a299f78d74734298604bfd2fd2174138c0a3a32", features = ["native"] }
-sovereign-sdk = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "7a299f78d74734298604bfd2fd2174138c0a3a32" }
-sovereign-db = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "7a299f78d74734298604bfd2fd2174138c0a3a32" }
-risc0-adapter = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "7a299f78d74734298604bfd2fd2174138c0a3a32" }
-
-#sovereign-db = { git = "https://github.com/Sovereign-Labs/sovereign.git", features = ["temp"], rev = "a879d355b0506b64decacabf9f072bee122cf9ca1" }
+jupiter = { git = "https://github.com/Sovereign-Labs/Jupiter.git", rev = "33fba8c86640414f0b31022918dd7e7839fb8e64" }
+demo-app = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "04d1591b4568cdfbebaa05eeee020c811080a9af", features = ["native"] }
+sovereign-sdk = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "04d1591b4568cdfbebaa05eeee020c811080a9af" }
+sovereign-db = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "04d1591b4568cdfbebaa05eeee020c811080a9af" }
+risc0-adapter = { git = "https://github.com/Sovereign-Labs/sovereign.git", rev = "04d1591b4568cdfbebaa05eeee020c811080a9af" }
 
 [dev-dependencies]
 tempfile = "3.5.0"
-
-[patch.'https://github.com/Sovereign-Labs/sovereign.git']
-sovereign-sdk = { path = "../sovereign/sdk" }
-demo-app = { path = "../sovereign/demo-app" }
-risc0-adapter = { path = "../sovereign/adapters/risc0" }
-sovereign-db = { path = "../sovereign/db/sovereign-db" }
-
-[patch.'https://github.com/Sovereign-Labs/Jupiter.git']
-jupiter = { path = "../jupiter"}
