@@ -81,7 +81,7 @@ async fn main() -> Result<(), anyhow::Error> {
 
     let start_height = rollup_config.start_height + last_slot_processed_before_shutdown;
     // Request data from the DA layer and apply it to the demo app
-    for height in start_height..start_height + 10 {
+    for height in start_height.. {
         println!(
             "Requesting data for height {} and prev_state_root 0x{}",
             height,
