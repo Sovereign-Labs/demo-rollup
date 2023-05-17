@@ -1,9 +1,10 @@
 mod config;
 
+use crate::config::RollupConfig;
 use demo_app::app::create_demo_config;
 use demo_app::app::{DefaultPrivateKey, NativeAppRunner};
-use demo_app::config::FromTomlFile;
-use jupiter::da_service::{CelestiaService};
+use demo_app::config::from_toml_path;
+use jupiter::da_service::CelestiaService;
 use jupiter::types::NamespaceId;
 use jupiter::verifier::CelestiaVerifier;
 use jupiter::verifier::RollupParams;
@@ -13,10 +14,9 @@ use sovereign_sdk::da::DaVerifier;
 use sovereign_sdk::services::da::DaService;
 use sovereign_sdk::stf::{StateTransitionFunction, StateTransitionRunner};
 use tracing::Level;
-use crate::config::RollupConfig;
 
 // I sent 8 demo election transactions at height 293686, generated using the demo app data generator
-const DATA_DIR_LOCATION: &'static str = "demo_data";
+const DATA_DIR_LOCATION: &str = "demo_data";
 const ROLLUP_NAMESPACE: NamespaceId = NamespaceId([115, 111, 118, 45, 116, 101, 115, 116]);
 
 pub fn initialize_ledger() -> LedgerDB {
@@ -26,7 +26,7 @@ pub fn initialize_ledger() -> LedgerDB {
 
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
-    let rollup_config = RollupConfig::from_path("rollup_config.toml")?;
+    let rollup_config: RollupConfig = from_toml_path("rollup_config.toml")?;
 
     // Initializing logging
     let subscriber = tracing_subscriber::fmt()
@@ -53,11 +53,8 @@ async fn main() -> Result<(), anyhow::Error> {
     // Initialize the demo app
     let demo = demo_runner.inner_mut();
     let sequencer_private_key = DefaultPrivateKey::generate();
-    let genesis_config = create_demo_config(
-        100000000,
-        &sequencer_private_key,
-        &sequencer_private_key,
-    );
+    let genesis_config =
+        create_demo_config(100000000, &sequencer_private_key, &sequencer_private_key);
 
     let item_numbers = ledger_db.get_next_items_numbers();
     let last_slot_processed_before_shutdown = item_numbers.slot_number - 1;
