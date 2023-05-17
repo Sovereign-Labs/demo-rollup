@@ -87,15 +87,15 @@ async fn main() -> Result<(), anyhow::Error> {
             .is_ok());
         println!("Received {} blobs", blob_txs.len());
 
-        // let mut data_to_commit = SlotCommit::new(filtered_block);
-        // demo.begin_slot(Default::default());
-        // for blob in blob_txs.clone() {
-        //     let receipts = demo.apply_blob(blob, None);
-        //     data_to_commit.add_batch(receipts);
-        // }
-        // let (next_state_root, _witness, _) = demo.end_slot();
-        // ledger_db.commit_slot(data_to_commit)?;
-        // prev_state_root = next_state_root.0;
+        let mut data_to_commit = SlotCommit::new(filtered_block);
+        demo.begin_slot(Default::default());
+        for blob in blob_txs.clone() {
+            let receipts = demo.apply_blob(blob, None);
+            data_to_commit.add_batch(receipts);
+        }
+        let (next_state_root, _witness, _) = demo.end_slot();
+        ledger_db.commit_slot(data_to_commit)?;
+        prev_state_root = next_state_root.0;
     }
 
     Ok(())
