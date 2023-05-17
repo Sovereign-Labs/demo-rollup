@@ -4,6 +4,7 @@ use demo_app::app::create_demo_config;
 use demo_app::app::{DefaultPrivateKey, NativeAppRunner};
 use demo_app::config::FromTomlFile;
 use jupiter::da_service::{CelestiaService};
+use jupiter::types::NamespaceId;
 use jupiter::verifier::CelestiaVerifier;
 use jupiter::verifier::RollupParams;
 use risc0_adapter::host::Risc0Host;
@@ -16,6 +17,7 @@ use crate::config::RollupConfig;
 
 // I sent 8 demo election transactions at height 293686, generated using the demo app data generator
 const DATA_DIR_LOCATION: &'static str = "demo_data";
+const ROLLUP_NAMESPACE: NamespaceId = NamespaceId([115, 111, 118, 45, 116, 101, 115, 116]);
 
 pub fn initialize_ledger() -> LedgerDB {
     let ledger_db = LedgerDB::with_path(DATA_DIR_LOCATION).expect("Ledger DB failed to open");
@@ -41,11 +43,11 @@ async fn main() -> Result<(), anyhow::Error> {
     let da_service = CelestiaService::new(
         rollup_config.da.clone(),
         RollupParams {
-            namespace: rollup_config.namespace_id,
+            namespace: ROLLUP_NAMESPACE,
         },
     );
     let da_verifier = CelestiaVerifier::new(RollupParams {
-        namespace: rollup_config.namespace_id,
+        namespace: ROLLUP_NAMESPACE,
     });
 
     // Initialize the demo app
@@ -88,15 +90,15 @@ async fn main() -> Result<(), anyhow::Error> {
             .is_ok());
         println!("Received {} blobs", blob_txs.len());
 
-        let mut data_to_commit = SlotCommit::new(filtered_block);
-        demo.begin_slot(Default::default());
-        for blob in blob_txs.clone() {
-            let receipts = demo.apply_blob(blob, None);
-            data_to_commit.add_batch(receipts);
-        }
-        let (next_state_root, _witness, _) = demo.end_slot();
-        ledger_db.commit_slot(data_to_commit)?;
-        prev_state_root = next_state_root.0;
+        // let mut data_to_commit = SlotCommit::new(filtered_block);
+        // demo.begin_slot(Default::default());
+        // for blob in blob_txs.clone() {
+        //     let receipts = demo.apply_blob(blob, None);
+        //     data_to_commit.add_batch(receipts);
+        // }
+        // let (next_state_root, _witness, _) = demo.end_slot();
+        // ledger_db.commit_slot(data_to_commit)?;
+        // prev_state_root = next_state_root.0;
     }
 
     Ok(())

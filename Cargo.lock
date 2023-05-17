@@ -1252,7 +1252,6 @@ dependencies = [
  "tendermint",
  "tendermint-proto",
  "tokio",
- "toml 0.7.3",
  "tracing",
 ]
 
@@ -2566,7 +2565,6 @@ dependencies = [
  "tempfile",
  "tendermint",
  "tokio",
- "toml 0.7.3",
  "tracing",
  "tracing-subscriber",
 ]
